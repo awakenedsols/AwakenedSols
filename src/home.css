@@ -1,0 +1,260 @@
+.connectButton {
+    margin-top:5%;
+    margin-bottom:4%;
+}
+
+.mintingAnnouncement{
+    margin-left:23%;
+}
+
+#button {
+    background-color: white;
+    color:black;
+    margin-left:46%;
+}
+
+#button:hover {
+    background-color: #cfcfcf;
+    color: #3c3c3c;
+}
+
+.bannerContainer {
+    width: 100vw;
+    height: 80vh;
+}
+
+.banner {
+    height: 100%;
+    width: 100%;
+}
+
+li{
+list-style-type:none
+}
+
+.main{
+    height:92vh;
+    width:100%;
+    background-image: url('bg.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+#mainEmptyDiv{
+    height:50%;
+}
+
+.mintContainer {
+    display:none;
+    width: 40%;
+    margin: 0% 30%;
+    text-align: center;
+}
+
+.mintContainer p{
+    margin-bottom:0;
+    font-size:0.90em;
+}
+
+#mintButton {
+    width: 5%;
+    padding-left: 1.5%;
+    margin: 4% 47.5%; /*todo change 4 to 0*/
+    margin-bottom:4%; /*todo change 4 to 2*/
+    margin-top:5px;
+}
+
+#roadmap{
+    background-color:#0c1821;
+}
+
+.roadMapContainer li{
+   margin-bottom:5px;
+}
+
+#about{
+    background-color: #1b2a41;
+    width:100%;
+    height:60vh;
+    padding-top: 15%;
+    padding-bottom:5%;
+    margin-bottom:0;
+}
+
+.aboutContainer{
+    width:60%;
+    text-align:center;
+    margin-top:10%;
+    margin-bottom: 10%;
+    margin:0 auto;
+}
+
+ .aboutContainer p {
+    margin-bottom:10px;
+ }
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+  }
+  
+.firstCol{
+    margin-left:10%;
+}
+
+#roadmap{
+    background-color: #0c1821;
+    width:100%;
+    height:68vh;
+    padding-top: 5%;
+    padding-bottom:10%;
+    margin-bottom:0;
+}
+
+.roadMapContainer{
+    width:80%;
+    margin-bottom: 10%;
+    margin:0 auto;
+    padding:0;
+}
+
+.roadMapContainer p {
+    margin-bottom:10px;
+ }
+
+  h3{
+    margin-top:5%;
+  }
+  
+  /* Create two equal columns that sits next to each other */
+  .columnRarity {
+    flex: 15%;
+    padding: 0 4px;
+  }
+  
+  .columnRarity img {
+    width: 80%;
+    margin: 5%;
+    vertical-align: middle;
+  }
+
+.h1 {
+    margin-top:0;
+    padding-top:5%;
+    text-align: center;
+}
+
+.hide{
+    display:none;
+} 
+
+.smallerText{
+    font-size:0.95em;
+}
+
+@media only screen and (max-width: 1100px) {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 4px;
+      }
+      
+    .firstCol{
+        margin-left:0%;
+    }
+    
+    /* Create two equal columns that sits next to each other */
+    .column {
+    flex: 50%;
+    }
+    
+    .column img {
+        width: 70%;
+        height:70%;
+        vertical-align: middle;
+        margin-left:15%;
+    }
+
+    p{
+        font-size:0.8em;
+    }
+
+    .smallerText{
+        font-size: 0.6em;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    #button {
+        font-size: 0.7em;
+        margin-left:39%;
+    }
+
+    .aboutContainer, .featuredRugz{
+        font-size: 0.7em;
+    }
+
+    .roadMapContainer {
+        font-size: 0.7em;
+    }
+
+    .connectButton{
+        display:none;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 4px;
+      }
+      
+    .firstCol{
+        margin-left:0%;
+    }
+    
+    /* Create two equal columns that sits next to each other */
+    .column {
+        flex: 50%;
+    }
+    
+    .column img {
+        width: 70%;
+        vertical-align: middle;
+        margin-left:10%;
+    }
+    
+    p{
+        font-size:0.6em;
+    }
+
+    .smallerText{
+        font-size: 0.4em;
+    }
+
+    .main{
+        height:92vh;
+        width:100%;
+        background-image: url('bg.png');
+        background-size: cover;
+        background-position-x: 50%;
+        background-repeat: no-repeat;
+    }
+
+    #about{
+        height:90vh;
+    }
+
+    .aboutContainer{
+        margin-top:25%;
+        width:80%;
+    }
+
+    #roadmap{
+        height:90vh;
+    }
+
+    .roadMapContainer{
+        margin-top:40%;
+    }
+}

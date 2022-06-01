@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #0c1821;
+    color: #FFFFFF;
+}
+
+code {
+    font-family: 'Press Start 2P', cursive;
+}
+
+#logo{
+    padding-top:0.25%;
+}
+
+.sidebar{
+    background:#0c1821;
+    width:55px;
+    position:fixed;
+    right:0;
+    top:40%;
+    border-top-left-radius:15px;
+    border-bottom-left-radius:15px;
+    box-shadow: 1px 1px 5px #888888;
+    padding-top:1%;
+    padding-bottom:1%;
+}
+
+.sidebar li{
+    list-style-type: none;
+    margin-bottom:10px;
+}
+
+.sidebar a{
+    text-decoration:none;
+    color: var(--accent-1);
+}
+
+.sidebar ul{
+    padding: 0;
+    margin-top: 10px;
+    margin-left: 12px;
+}
+
+.fa-arrow-up{
+    color: #fffffc;
+}
+
+.fa-arrow-up:hover{
+    color: #d4d4cf;
+    transition: color 0.5s ease;
+}
+
+.fa-discord{
+    color:#bdb2ff;
+}
+
+.fa-discord:hover{
+    color: #32004f;
+    transition: color 0.5s ease;
+}
+
+.fa-twitter{
+    color: #9bf6ff;
+}
+
+.fa-twitter:hover{
+    color: #a9d2f6;
+    transition: color 0.5s ease;
+}
+
+
+footer{
+    background-color: black;
+    color: white;
+    font-weight: 200;
+    font-size: 0.9em;
+    height:40px;
+    text-align:center;
+    padding-top:8px;
+    padding-bottom:16px;
+}
+
+@media only screen and (max-width: 900px) {
+    footer{
+        font-size: 0.8em;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    footer{
+        font-size: 0.7em;
+    }
+
+    .sidebar{
+        background:black;
+        width:35px;
+        position:fixed;
+        right:0;
+        top:25%;
+        border-top-left-radius:15px;
+        border-bottom-left-radius:15px;
+        box-shadow: 1px 1px 5px #888888;
+    }
+    
+    .sidebar li{
+        list-style-type: none;
+        margin-bottom:10px;
+        font-size:0.7em;
+    }
+    
+    .sidebar a{
+        text-decoration:none;
+        color: var(--accent-1);
+    }
+    
+    .sidebar ul{
+        padding: 0;
+        margin-top: 10px;
+        margin-left: 8px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    footer{
+        font-size: 0.6em;
+    }
+}
