@@ -604,7 +604,7 @@ const Home = (props: HomeProps) => {
           </p><p>A collection of 2,222 uniquely generated Awakened Sols on the Solana blockchain.  
           </p><p>An alpha group and Sniping tool with unique features only available to holders.
           </p><p>An open minded community.
-          </p>
+          </p><p>Mint Date: TBA</p>
           </div></div>}
 
           {<div id="roadmap">
