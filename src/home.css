@@ -38,6 +38,7 @@ list-style-type:none
     background-image: url('bg.png');
     background-size: 100%;
     background-repeat: no-repeat;
+    font-family: "Press Start 2P", sans-serif;
 }
 
 #mainEmptyDiv{

@@ -702,7 +702,7 @@ const Home = (props: HomeProps) => {
             variant="caption"
             align="center"
             display="block"
-            style={{ marginTop: 7, color: 'grey' }}
+            style={{ marginTop: 7, color: 'grey'}}
           >
             Powered by Metaplex
           </Typography>
