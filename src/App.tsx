@@ -23,13 +23,7 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import { DEFAULT_TIMEOUT } from './connection';
-const treasury = new anchor.web3.PublicKey(
-  process.env.REACT_APP_TREASURY_ADDRESS!
-);
 
-const config = new anchor.web3.PublicKey(
-  process.env.REACT_APP_CANDY_MACHINE_CONFIG!
-);
 
 const candyMachineId = new anchor.web3.PublicKey(
   process.env.REACT_APP_CANDY_MACHINE_ID!

@@ -45,9 +45,9 @@ list-style-type:none
 }
 
 .mintContainer {
-    display:none;
+    /*display:none;*/
     width: 40%;
-    margin: 0% 30%;
+    margin: 11% 30%;
     text-align: center;
 }
 
