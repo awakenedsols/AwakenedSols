@@ -2,6 +2,7 @@ import "./App.css";
 import { useMemo } from "react";
 
 import Home from "./Home";
+import Sniper from "./Sniper";
 import {Route, Routes} from 'react-router-dom'
 
 import * as anchor from "@project-serum/anchor";
@@ -85,6 +86,7 @@ const App = () => {
             <WalletDialogProvider>
               <Routes>
                 <Route path="/" element={HomeComponent()}/>
+                <Route path="/Sniper" element={SniperComponent()}/>
                 </Routes>
             </WalletDialogProvider>
           </WalletProvider>
@@ -98,6 +100,18 @@ export default App;
 const HomeComponent = () => {
   return (
    <Home
+   candyMachineId={candyMachineId}
+   connection={connection}
+   txTimeout={DEFAULT_TIMEOUT}
+   rpcHost={rpcHost}
+   network={network}
+                />
+  );
+}
+
+const SniperComponent = () => {
+  return (
+   <Sniper
    candyMachineId={candyMachineId}
    connection={connection}
    txTimeout={DEFAULT_TIMEOUT}
