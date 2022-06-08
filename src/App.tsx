@@ -24,7 +24,13 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import { DEFAULT_TIMEOUT } from './connection';
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 
+const client = new ApolloClient({
+  uri: "https://graphql.icy.tools/graphql/",
+  cache: new InMemoryCache()
+});
 
 const candyMachineId = new anchor.web3.PublicKey(
   process.env.REACT_APP_CANDY_MACHINE_ID!
@@ -84,10 +90,12 @@ const App = () => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
+            <ApolloProvider client={client}>
               <Routes>
                 <Route path="/" element={HomeComponent()}/>
                 <Route path="/Sniper" element={SniperComponent()}/>
                 </Routes>
+                </ApolloProvider>
             </WalletDialogProvider>
           </WalletProvider>
         </ConnectionProvider>

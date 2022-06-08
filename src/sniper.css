@@ -1,3 +1,70 @@
 body{
-    font-family: 'SinMedia Sans', sans-serif;
+    font-family: "Press Start 2P", sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: black;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #59AD6B;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #41814f;
+  }
+
+  .symbolIcon{
+      width:25px;
+  }
+
+  .tableCell{
+    color:"white";
+    background-color:"#192026";
+    font-family:"Press Start 2P";
+    font-size: 0.8em;
+  }
+
+  .tableCellText{
+    color:"white";
+    background-color:"#192026";
+    font-family:"Orbitron";
+  }
+
+#tableContainer{
+    background-color: #192026;
+    overflow-y: scroll;
+    max-height:600px;
+}
+
+ .dataTable{
+ position:relative!important;
+ padding:5px;
+ }
+
+th{
+    position:sticky;
+    text-align:center;
+    font-size:0.9em;
+}
+
+ .tableHead{
+     border-bottom: "1px solid white";
+     position: sticky;
+ }
+
+ .fa-twitter{
+    color: #59AD6B;
+}
+
+.fa-twitter:hover{
+    color: #41814f;
+    transition: color 0.5s ease;
 }
