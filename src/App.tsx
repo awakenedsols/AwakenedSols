@@ -41,8 +41,6 @@ const network = process.env.REACT_APP_SOLANA_NETWORK as WalletAdapterNetwork;
 const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
 const connection = new anchor.web3.Connection(rpcHost);
 
-const startDateSeed = parseInt(process.env.REACT_APP_CANDY_START_DATE!, 10);
-
 const txTimeout = 30000; // milliseconds (confirm this works for your project)
 
 const theme = createTheme({
@@ -91,9 +89,9 @@ const App = () => {
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
             <ApolloProvider client={client}>
-              <Routes>
-                <Route path="/" element={HomeComponent()}/>
-                <Route path="/Sniper" element={SniperComponent()}/>
+                <Routes>
+                  <Route path="/" element={HomeComponent()}/>
+                  <Route path="/Sniper" element={SniperComponent()}/>
                 </Routes>
                 </ApolloProvider>
             </WalletDialogProvider>

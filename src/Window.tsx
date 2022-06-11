@@ -15,21 +15,29 @@ export const Window = ({ children, ...props }: Props) => {
   const windowTopStyle = {
     backgroundColor: '#060B15',
     paddingTop: "5px",
-    marginBottom: "5%",
+    paddingBottom:"5%",
     border: "1px solid white",
-    borderRadius: "1%"
+    overflow: "hidden",
+    borderRadius: "3%"
   };
 
   const windowStyle = {
     backgroundColor: '#060B15',
     padding:"30px",
-    paddingTop: "0"
+    paddingBottom:"10px",
+    paddingTop: "0",
+    height:"60vh"
   };
 
+  var windowElem = document.getElementById("window");
+  if(windowElem){
+    windowElem.style.overflowY = "scroll";
+  }
+
   return (
-    <div onClick={open} style={windowTopStyle}>
+    <div onClick={open} style={windowTopStyle} id="window">
         <Row>
-            <Col>x</Col>
+            <Col style={{marginLeft:"1%"}}>x</Col>
             <Col xs={12} md={10} style={{textAlign:"center"}}><p>{props.title}</p></Col>
             <Col><img src={enlargeIcon} style={{width:"20px", marginLeft:"70%"}}></img></Col>
         </Row>
