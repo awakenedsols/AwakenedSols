@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import {Row, Col, Container} from "react-bootstrap";
 import enlargeIcon from './enlargeIcon.png'
-
+import './Window.css'
 interface Props {
     children?: ReactNode,
     title: string
@@ -15,10 +15,10 @@ export const Window = ({ children, ...props }: Props) => {
   const windowTopStyle = {
     backgroundColor: '#060B15',
     paddingTop: "5px",
-    paddingBottom:"5%",
+    paddingBottom:"2%",
     border: "1px solid white",
     overflow: "hidden",
-    borderRadius: "3%"
+    borderRadius: "3%",
   };
 
   const windowStyle = {
@@ -35,13 +35,13 @@ export const Window = ({ children, ...props }: Props) => {
   }
 
   return (
-    <div onClick={open} style={windowTopStyle} id="window">
+    <div onClick={open} style={windowTopStyle} className="window">
         <Row>
             <Col style={{marginLeft:"1%"}}>x</Col>
             <Col xs={12} md={10} style={{textAlign:"center"}}><p>{props.title}</p></Col>
             <Col><img src={enlargeIcon} style={{width:"20px", marginLeft:"70%"}}></img></Col>
         </Row>
-        <div style={windowStyle}>
+        <div style={windowStyle} className="windowChildren">
             
             {children}
         </div>

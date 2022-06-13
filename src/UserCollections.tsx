@@ -6,7 +6,10 @@ import styled from 'styled-components'
 import { Key, ReactChild, ReactFragment, ReactPortal, useCallback, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useQuery, gql } from "@apollo/client";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import './userCollections.css';
 
 interface Props {
     children?: ReactNode
@@ -19,15 +22,33 @@ export const UserCollections = ({ children, ...props }: Props) => {
   const [data, setData] = useState<any>();
   const wallet = props.wallet;
 
-  const getCollections = async () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3
+  };
 
+  const carouelStyle = {
+    height:"30%",
+    width: "30%",
+    border: "1px solid white",
+    borderRadius: "25%"
+  };
+
+  const getCollections = async () => {
+    console.log('getcolls');
     var config = {
       method: 'get',
-      url: 'https://api-devnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=100&listStatus=both'
+      url: 'https://api-devnet.magiceden.dev/v2/wallets/EWmtsfBA8EikR3vvhsXgxn7cBQCUZfXJ7jMwXUpYRzXY/tokens?offset=0&limit=100&listStatus=both'
     };
+
 
     axios(config)
     .then(function (response) {
+      console.log('axios call');
+      console.log(response);
       console.log(JSON.stringify(response.data));
       setData(response.data);    
       return response.data;
@@ -35,6 +56,8 @@ export const UserCollections = ({ children, ...props }: Props) => {
       console.log(error);
     });
   }
+  
+
 
   useEffect(() => {
         console.log('use effect');
@@ -46,34 +69,6 @@ export const UserCollections = ({ children, ...props }: Props) => {
           console.log(data);
         }
   });
-  
-
-  const Styles = styled.div`
-  table {
-    background-color: #192026;
-    color:white;
-    border-spacing: 0;
-    position:relative;
-
-    tr {
-      td {
-        border-bottom: 0;
-      }
-    }
-
-    th{
-      background-color: #192026;
-      top:0;
-      position:sticky;
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.2rem;
-    }
-  }
-`
 
 useEffect(() => {
   const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
@@ -84,7 +79,7 @@ useEffect(() => {
       console.log(data);
     }
   
-  }, 5000)
+  }, 1000)
 
   return () => clearInterval(intervalId); //This is important
  
@@ -92,41 +87,62 @@ useEffect(() => {
 
 
 return (
-  <>
-  {data ? (
-    <Styles>
-    <table>
-      <thead>
-        <tr>
-          <th align="left">Name</th>
-          <th align="left">Launch Date</th>
-          <th align="left">FP</th>
-          <th align="left">Volume</th>
-          <th align="left">Listed</th>
-          <th align="left">Symbol</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((collection:any) => (
-          <tr 
-            key={collection.name}
-          >
-            <td style={{fontFamily: "Press Start 2P"}}>
-              {collection.name} 
-            </td>
-            <td align="left">{new Date(collection.launchDatetime).toDateString()}</td>
-            <td align="left"><img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice}</td>
-            <td align="left">{collection.volumeAll}</td>
-            <td align="left">{collection.listedCount}</td>
-            <td style={{fontFamily: "Press Start 2P"}} align="left">{collection.symbol}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </Styles> 
-    ) : (
-      <h1>Loading...</h1>
-  )}
-  </>
+  <div>
+    <h3>My NFTs</h3>
+  <Slider {...settings}>
+          <div>
+            <div className="NFTdiv">
+              <h4>Awakened Sols</h4>
+              <img src="logo.png" className="NFTimage"></img>
+              <p><img className="symbolIcon" src={solanaIcon}></img>price</p>
+            </div>
+          </div>
+
+          <div>
+            <div className="NFTdiv">
+              <h4>Awakened Sols</h4>
+              <img src="logo.png" className="NFTimage"></img>
+              <p><img className="symbolIcon" src={solanaIcon}></img>price</p>
+            </div>
+          </div>
+
+          <div>
+            <div className="NFTdiv">
+              <h4>Awakened Sols</h4>
+              <img src="logo.png" className="NFTimage"></img>
+              <p><img className="symbolIcon" src={solanaIcon}></img>price</p>
+            </div>
+          </div>
+
+          <div>
+            <div className="NFTdiv">
+              <h4>Awakened Sols</h4>
+              <img src="logo.png" className="NFTimage"></img>
+              <p><img className="symbolIcon" src={solanaIcon}></img>price</p>
+            </div>
+          </div>
+   </Slider>
+   </div>
+  // <>
+  // {data ? (
+  //   <> 
+  //   <Slider dots={true}>
+  //     {data.map((collection:any) => (
+        
+  //         <div>
+  //           <h3>{collection.name}</h3>
+  //           <p><img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice}</p>
+  //           <img src={collection.image}></img>
+  //         </div>
+    
+  //     ))}
+  //   </Slider>
+  // </>
+  //   ) : (
+  //     <div>
+  //     <h1>Loading...</h1>
+  //    </div>
+  // )}
+  // </>
 );
 };

@@ -69,12 +69,17 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
   
 
   const Styles = styled.div`
+  div{
+   
+  }
   table {
     background-color: #192026;
     color:white;
     border-spacing: 0;
     position:relative;
-
+    width:100%;
+    overflow-y:scroll;
+    
     tr {
       td {
         border-bottom: 0;
@@ -115,6 +120,7 @@ return (
   <>
   {data ? (
     <Styles>
+      <div>
     <table>
       <thead>
         <tr>
@@ -143,6 +149,7 @@ return (
         ))}
       </tbody>
     </table>
+    </div>
   </Styles> 
     ) : (
       <h1>Loading...</h1>
