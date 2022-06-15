@@ -77,8 +77,9 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
     color:white;
     border-spacing: 0;
     position:relative;
-    width:100%;
+    width:50%;
     overflow-y:scroll;
+    overflow-x:hidden;
     
     tr {
       td {

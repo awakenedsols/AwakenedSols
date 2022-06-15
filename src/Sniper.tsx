@@ -12,13 +12,7 @@ import { AlertState, formatNumber, getAtaForMint, toDate } from './utils';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TablePagination from '@mui/material/TablePagination';
+import {Row, Col} from 'react-bootstrap';
 import { createTheme } from "@material-ui/core/styles";
 import solanaIcon from './solanaIcon.png'
 
@@ -27,6 +21,7 @@ import { Rowing } from '@material-ui/icons';
 import { isWhiteSpaceLike } from 'typescript';
 import {CollectionsTable} from "./CollectionsTable"
 import { UserCollections } from './UserCollections';
+import { NewCollections } from './NewCollections';
 
 const ConnectButton = styled(WalletDialogButton)`
   width: 100%;
@@ -142,11 +137,19 @@ const Sniper = (props: SniperProps) => {
             ) : (
             <>
             <div id="sniperContainer">
-              <h3>Awakened Sniper</h3>
-              <Window title="Trending Collections">
-                <CollectionsTable wallet={wallet.publicKey}></CollectionsTable>
-              </Window>
-              <UserCollections wallet={wallet.publicKey}></UserCollections>
+              <Row>
+                <Col sm={4}>
+                  <Window title="New Collections">
+                  <NewCollections wallet={wallet}></NewCollections>
+                  </Window>
+                </Col>
+                <Col sm={8}>
+                  <Window title="Trending Collections">
+                    <CollectionsTable wallet={wallet.publicKey}></CollectionsTable>
+                  </Window>
+                  <UserCollections wallet={wallet.publicKey}></UserCollections>
+                </Col>
+              </Row>
             </div>
             </>
           )}

@@ -24,3 +24,8 @@
     max-width: 200px;
     margin:0 auto;
 }
+
+.symbolIcon{
+    width:15px;
+    display:inline;
+}

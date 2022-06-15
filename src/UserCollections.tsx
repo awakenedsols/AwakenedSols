@@ -38,7 +38,7 @@ export const UserCollections = ({ children, ...props }: Props) => {
   };
 
   const getCollections = async () => {
-    console.log('getcolls');
+    console.log('get new colls');
     var config = {
       method: 'get',
       url: 'https://api-devnet.magiceden.dev/v2/wallets/EWmtsfBA8EikR3vvhsXgxn7cBQCUZfXJ7jMwXUpYRzXY/tokens?offset=0&limit=100&listStatus=both'
@@ -92,33 +92,33 @@ return (
   <Slider {...settings}>
           <div>
             <div className="NFTdiv">
-              <h4>Awakened Sols</h4>
+              <h6>Awakened Sols</h6>
               <img src="logo.png" className="NFTimage"></img>
-              <p><img className="symbolIcon" src={solanaIcon}></img>price</p>
+              <p>FP: <img className="symbolIcon" src={solanaIcon}></img>0.5</p>
             </div>
           </div>
 
           <div>
             <div className="NFTdiv">
-              <h4>Awakened Sols</h4>
+              <h6>Awakened Sols</h6>
               <img src="logo.png" className="NFTimage"></img>
-              <p><img className="symbolIcon" src={solanaIcon}></img>price</p>
+              <p>FP: <img className="symbolIcon" src={solanaIcon}></img>0.5</p>
             </div>
           </div>
 
           <div>
             <div className="NFTdiv">
-              <h4>Awakened Sols</h4>
+              <h6>Awakened Sols</h6>
               <img src="logo.png" className="NFTimage"></img>
-              <p><img className="symbolIcon" src={solanaIcon}></img>price</p>
+              <p>FP: <img className="symbolIcon" src={solanaIcon}></img>0.5</p>
             </div>
           </div>
 
           <div>
             <div className="NFTdiv">
-              <h4>Awakened Sols</h4>
+              <h6>Awakened Sols</h6>
               <img src="logo.png" className="NFTimage"></img>
-              <p><img className="symbolIcon" src={solanaIcon}></img>price</p>
+              <p>FP: <img className="symbolIcon" src={solanaIcon}></img>0.5</p>
             </div>
           </div>
    </Slider>

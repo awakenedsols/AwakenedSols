@@ -1,3 +1,7 @@
 .App {
   text-align: center;
 }
+
+.MuiContainer-root{
+ padding:0px;
+}
