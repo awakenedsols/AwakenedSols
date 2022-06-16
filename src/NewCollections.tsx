@@ -10,6 +10,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './NewCollections.css';
+import Grid from '@material-ui/core/Grid'
+import Paper from "@material-ui/core/Paper";
+import { margin } from "@mui/system";
 
 interface Props {
     children?: ReactNode
@@ -23,7 +26,15 @@ export const NewCollections = ({ children, ...props }: Props) => {
   const wallet = props.wallet;
 
   const stylez = {
-    height:"100vh"
+    height:"4%",
+    marginBottom: "3%",
+    overflow:"hidden",
+    backgroundColor: "#192026"
+  };
+
+  const paperstylez = {
+    textAlign: 'center' as const,
+    marginTop: "20%"
   };
 
   const getCollections = async () => {
@@ -51,7 +62,7 @@ export const NewCollections = ({ children, ...props }: Props) => {
     var windowElem = document.getElementsByClassName("windowChildren") as HTMLCollectionOf<HTMLElement>;
     if(windowElem){
         console.log(windowElem);
-        windowElem[0].style.height = "103vh";
+        windowElem[0].style.height = "99vh";
     }
     
     console.log('use effect');
@@ -81,21 +92,41 @@ useEffect(() => {
 
 
 return (
-  <div style={stylez}>
-   {data ? (
-       data.map((collection:any) => (
-           <div>
-            <img src={collection.image} className="NewCollectionsImgs"></img>
-            <h6>{collection.name}</h6>
-            <p>FP: <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice}</p>
-           </div>
-       ))
-     ) : (
-       <div>
-       <h1>Loading...</h1>
-      </div>
-   )}
-   </div>
+    <Grid container spacing={2}>
+      <Grid item xs={6}>
+      {data ? (
+          data.slice(0, Math.floor(data.length/2)).map((collection:any, i:number) => {
+            return (
+            <Paper style={stylez}>
+              <div style={paperstylez}>
+                <img src={collection.image} className="NewCollectionsImgs"></img>
+                <p>{collection.name}</p>
+                <p>FP: <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice} 0.5</p>
+              </div>
+            </Paper>);
+            })
+        ) : (
+          <div>
+          <h1>Loading...</h1>
+          </div>
+      )}
+      </Grid>
+
+      <Grid item xs={6}>
+        {data ? (
+            data.slice(Math.floor(data.length/2), data.length-1).map((collection:any, i:number) => {
+              return (
+              <Paper style={stylez}>
+                <div style={paperstylez}>
+                  <img src={collection.image} className="NewCollectionsImgs"></img>
+                  <p>{collection.name}</p>
+                  <p>FP: <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice} 0.5</p>
+                </div>
+              </Paper>);
+              })
+          ) : (<></>)}
+      </Grid>
+   </Grid>
   
 );
 };

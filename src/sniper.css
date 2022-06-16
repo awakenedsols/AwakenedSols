@@ -23,9 +23,13 @@ body{
     background: #41814f;
   }
 
-.MuiContainer-root{
+
+  .MuiContainer-root{
+    padding:0px;
+    margin:0px !important;
     width:100%;
-}
+   }
+
 
   .symbolIcon{
       width:15px;
@@ -38,4 +42,11 @@ body{
 .fa-twitter:hover{
     color: #41814f;
     transition: color 0.5s ease;
+}
+
+#sniperContainer{
+  width:90vw;
+  margin-left:10%!important;
+  margin-top:2%!important;
+  margin-bottom:5%!important;
 }

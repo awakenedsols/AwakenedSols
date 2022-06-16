@@ -11,10 +11,10 @@ import { WalletDialogButton } from '@solana/wallet-adapter-material-ui';
 import { AlertState, formatNumber, getAtaForMint, toDate } from './utils';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 
-
 import {Row, Col} from 'react-bootstrap';
 import { createTheme } from "@material-ui/core/styles";
 import solanaIcon from './solanaIcon.png'
+import globeIcon from './globeIcon.png'
 
 import {Window} from './Window';
 import { Rowing } from '@material-ui/icons';
@@ -22,6 +22,8 @@ import { isWhiteSpaceLike } from 'typescript';
 import {CollectionsTable} from "./CollectionsTable"
 import { UserCollections } from './UserCollections';
 import { NewCollections } from './NewCollections';
+import { TimelineOppositeContent } from '@material-ui/lab';
+import osIcon from './OSicon.png'
 
 const ConnectButton = styled(WalletDialogButton)`
   width: 100%;
@@ -123,34 +125,50 @@ const Sniper = (props: SniperProps) => {
     color: "white"
   };
 
+  const consoleStyle = {
+    width: "65%",
+    height:"5%",
+    marginLeft: "20px",
+    display: "inline-block",
+    backgroundColor: "#192026",
+    border: "1px solid white", 
+    borderRadius: "5%"
+  };
+
   return (
     <main>
       {/* {wallet && <p>Balance: {(balance || 0).toLocaleString()} SOL</p>} */}
-        <div>
-          <Container>
+          <Container id="sniperContainer">
+              <div style={{display:"inline-block", marginLeft:'15%'}}><img src={osIcon} style={{width:"50px", display:"inline-block", paddingBottom:"20px"}}></img><span style={{fontSize: "0.8em"}}>AwakenedSniper</span></div>
+              <div style={consoleStyle}>
+                <table style={{width:"100%"}}>
+                  <th style={{width: "80%", }}>AwakenedOS</th>
+                  <th style={{borderLeft: "1px solid white", borderRight: "1px solid white"}}><img src={globeIcon} style={{display:"inline-block", width:"20px"}}></img></th>
+                  <th style={{fontSize: "0.8em", borderRadius: "5%"}}>{wallet? (<>wallet.PubKey</>) :(<>Not Connected</>) }</th>
+                </table>
+              </div>
+              
             {!wallet.connected ? (
-            <Container maxWidth="xs" style={{ position: 'relative' }}>
+            <Container style={{ position: 'relative' }}>
               <Paper style={{padding: 24, paddingBottom: 10, backgroundColor: '#151A1F', borderRadius: 6,}}>
                 <ConnectButton>Connect Wallet</ConnectButton>
               </Paper>
             </Container>
             ) : (
             <>
-            <div id="sniperContainer">
-              <Row>
-                <Col sm={4}>
+              <Row style={{margin: 0, width: "80vw"}}>
+                <Col sm={12} lg={4}>
                   <Window title="New Collections">
                   <NewCollections wallet={wallet}></NewCollections>
                   </Window>
                 </Col>
-                <Col sm={8}>
+                <Col sm={12} lg={8}>
                   <Window title="Trending Collections">
                     <CollectionsTable wallet={wallet.publicKey}></CollectionsTable>
                   </Window>
                   <UserCollections wallet={wallet.publicKey}></UserCollections>
                 </Col>
               </Row>
-            </div>
             </>
           )}
           <Snackbar
@@ -168,7 +186,6 @@ const Sniper = (props: SniperProps) => {
           </Alert>
         </Snackbar>
       </Container>
-      </div>
 
      </main>
      );

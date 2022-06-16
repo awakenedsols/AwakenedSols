@@ -3,5 +3,9 @@
 }
 
 .NewCollectionsImgs{
-    width:50px;
+    max-width:150px;
+}
+
+.MuiGrid-root, .MuiGrid-item, .MuiGrid-grid-xs-6{
+    margin: 0;
 }
