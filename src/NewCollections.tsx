@@ -29,6 +29,7 @@ export const NewCollections = ({ children, ...props }: Props) => {
     height:"4%",
     marginBottom: "3%",
     overflow:"hidden",
+    textOverflow:"ellipsis",
     backgroundColor: "#192026"
   };
 
@@ -47,8 +48,8 @@ export const NewCollections = ({ children, ...props }: Props) => {
 
     axios(config)
     .then(function (response) {
-      console.log('axios call');
-      console.log(JSON.stringify(response.data));
+      //console.log('axios call');
+      //console.log(JSON.stringify(response.data));
       setData(response.data);    
       return response.data;
       }).catch(function (error) {
@@ -62,7 +63,7 @@ export const NewCollections = ({ children, ...props }: Props) => {
     var windowElem = document.getElementsByClassName("windowChildren") as HTMLCollectionOf<HTMLElement>;
     if(windowElem){
         console.log(windowElem);
-        windowElem[0].style.height = "99vh";
+        windowElem[0].style.height = "100vh";
     }
     
     console.log('use effect');

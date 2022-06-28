@@ -30,8 +30,7 @@ export const Window = ({ children, ...props }: Props) => {
     paddingBottom:"10px",
     paddingTop: "0",
     height:"60vh"
-  }
-
+  };
 
   useEffect(() => {
 

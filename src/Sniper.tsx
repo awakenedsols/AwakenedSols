@@ -17,7 +17,7 @@ import solanaIcon from './solanaIcon.png'
 import globeIcon from './globeIcon.png'
 
 import {Window} from './Window';
-import { Rowing } from '@material-ui/icons';
+import { ContactSupportOutlined, Rowing } from '@material-ui/icons';
 import { isWhiteSpaceLike } from 'typescript';
 import {CollectionsTable} from "./CollectionsTable"
 import { UserCollections } from './UserCollections';
@@ -45,40 +45,6 @@ export interface SniperProps {
   rpcHost: string;
   network: WalletAdapterNetwork;
 }
-
-const theme = createTheme({
-  overrides: {
-    MuiCssBaseline: {
-      "@global": {
-        body: {
-          scrollbarColor: "#6b6b6b #2b2b2b",
-          "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
-            backgroundColor: "#000000",
-          },
-          "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
-            borderRadius: 8,
-            backgroundColor: "#6b6b6b",
-            minHeight: 24,
-            border: "3px solid #868600",
-          },
-          "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus": {
-            backgroundColor: "#959595",
-          },
-          "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active": {
-            backgroundColor: "#959595",
-          },
-          "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover": {
-            backgroundColor: "#959595",
-          },
-          "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
-            backgroundColor: "#2b2b2b",
-          },
-        },
-      },
-    },
-  },
-});
-
 
 const Sniper = (props: SniperProps) => {
   
@@ -116,35 +82,43 @@ const Sniper = (props: SniperProps) => {
         if(wallet){
           console.log(wallet);
         }
-  });
+        if(anchorWallet){
+          console.log(anchorWallet);
+        }
+  }, [anchorWallet]);
   
   
-
   const tableStyle = {
     backgroundColor: '##192026',
     color: "white"
   };
 
   const consoleStyle = {
-    width: "65%",
-    height:"5%",
-    marginLeft: "20px",
+    width: "70%",
+    height:"10%",
+    marginLeft: "10px",
     display: "inline-block",
     backgroundColor: "#192026",
     border: "1px solid white", 
-    borderRadius: "5%"
+    borderRadius: "4%",
+    fontSize: "0.8em"
   };
+
+  const green = {
+    color: 'green',
+    fontSize: "0.7em"
+  }
 
   return (
     <main>
       {/* {wallet && <p>Balance: {(balance || 0).toLocaleString()} SOL</p>} */}
           <Container id="sniperContainer">
-              <div style={{display:"inline-block", marginLeft:'15%'}}><img src={osIcon} style={{width:"50px", display:"inline-block", paddingBottom:"20px"}}></img><span style={{fontSize: "0.8em"}}>AwakenedSniper</span></div>
+              <div style={{display:"inline-block", width:"18%", marginLeft:'10%'}}><img src={osIcon} style={{width:"50px", display:"inline-block", paddingBottom:"20px"}}></img><span style={{fontSize: "0.8em"}}>AwakenedSniper</span></div>
               <div style={consoleStyle}>
                 <table style={{width:"100%"}}>
-                  <th style={{width: "80%", }}>AwakenedOS</th>
+                  <th style={{width: "80%"}}>AwakenedOS<span style={green}>v1.0</span></th>
                   <th style={{borderLeft: "1px solid white", borderRight: "1px solid white"}}><img src={globeIcon} style={{display:"inline-block", width:"20px"}}></img></th>
-                  <th style={{fontSize: "0.8em", borderRadius: "5%"}}>{wallet? (<>wallet.PubKey</>) :(<>Not Connected</>) }</th>
+                  <th style={{fontSize: "0.8em", borderRadius: "5%"}}>{anchorWallet ? (<>{anchorWallet?.publicKey.toString().substring(0, 15) + "..."}</>) : (<>Not Connected</>) }</th>
                 </table>
               </div>
               
@@ -159,14 +133,14 @@ const Sniper = (props: SniperProps) => {
               <Row style={{margin: 0, width: "80vw"}}>
                 <Col sm={12} lg={4}>
                   <Window title="New Collections">
-                  <NewCollections wallet={wallet}></NewCollections>
+                  <NewCollections wallet={anchorWallet?.publicKey}></NewCollections>
                   </Window>
                 </Col>
                 <Col sm={12} lg={8}>
                   <Window title="Trending Collections">
-                    <CollectionsTable wallet={wallet.publicKey}></CollectionsTable>
+                    <CollectionsTable wallet={anchorWallet?.publicKey}></CollectionsTable>
                   </Window>
-                  <UserCollections wallet={wallet.publicKey}></UserCollections>
+                  <UserCollections wallet={anchorWallet?.publicKey}></UserCollections>
                 </Col>
               </Row>
             </>

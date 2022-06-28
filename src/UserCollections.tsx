@@ -10,6 +10,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './userCollections.css';
+import { getSliderUtilityClass } from "@mui/base";
 
 interface Props {
     children?: ReactNode
@@ -21,13 +22,16 @@ export const UserCollections = ({ children, ...props }: Props) => {
 
   const [data, setData] = useState<any>();
   const wallet = props.wallet;
+  const [slides, setSlides] = useState<any>();
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrow:true,
+    initialSlide: 0
   };
 
   const carouelStyle = {
@@ -37,38 +41,46 @@ export const UserCollections = ({ children, ...props }: Props) => {
     borderRadius: "25%"
   };
 
+  const getSlides = () => {
+    
+    if(data){
+      let slidess = [];
+      slidess.push(
+      data.map((collection:any, index:number) => (
+        
+        <div  data-index={index} key={index} className="NFTdiv">
+          <h6>{collection.name}</h6>
+          <img className="NFTimage" src={collection.image}></img>
+          <div style={{display: "inline-block"}}>
+            <img className="symbolIcon" src={solanaIcon}></img><span>{collection.floorPrice}0.2</span>
+          </div>
+        </div>
+      )));
+
+      setSlides(slidess);
+      console.log(slides);
+    }
+  }
+
   const getCollections = async () => {
-    console.log('get new colls');
     var config = {
       method: 'get',
-      url: 'https://api-devnet.magiceden.dev/v2/wallets/EWmtsfBA8EikR3vvhsXgxn7cBQCUZfXJ7jMwXUpYRzXY/tokens?offset=0&limit=100&listStatus=both'
+      url: 'https://api-devnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=100&listStatus=both'
     };
 
 
     axios(config)
     .then(function (response) {
-      console.log('axios call');
-      console.log(response);
-      console.log(JSON.stringify(response.data));
+      //console.log('axios call user colecction');
+      //console.log(response);
+      //console.log(JSON.stringify(response.data));
       setData(response.data);    
+      getSlides();
       return response.data;
       }).catch(function (error) {
       console.log(error);
     });
   }
-  
-
-
-  useEffect(() => {
-        console.log('use effect');
-        if(wallet){
-          console.log('wallettt');
-          console.log(wallet);
-        }
-        if(data){
-          console.log(data);
-        }
-  });
 
 useEffect(() => {
   const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
@@ -83,66 +95,21 @@ useEffect(() => {
 
   return () => clearInterval(intervalId); //This is important
  
-}, [useState])
+}, [slides, wallet])
 
 
 return (
-  <div>
-    <h3>My NFTs</h3>
-  <Slider {...settings}>
-          <div>
-            <div className="NFTdiv">
-              <h6>Awakened Sols</h6>
-              <img src="logo.png" className="NFTimage"></img>
-              <p>FP: <img className="symbolIcon" src={solanaIcon}></img>0.5</p>
-            </div>
-          </div>
-
-          <div>
-            <div className="NFTdiv">
-              <h6>Awakened Sols</h6>
-              <img src="logo.png" className="NFTimage"></img>
-              <p>FP: <img className="symbolIcon" src={solanaIcon}></img>0.5</p>
-            </div>
-          </div>
-
-          <div>
-            <div className="NFTdiv">
-              <h6>Awakened Sols</h6>
-              <img src="logo.png" className="NFTimage"></img>
-              <p>FP: <img className="symbolIcon" src={solanaIcon}></img>0.5</p>
-            </div>
-          </div>
-
-          <div>
-            <div className="NFTdiv">
-              <h6>Awakened Sols</h6>
-              <img src="logo.png" className="NFTimage"></img>
-              <p>FP: <img className="symbolIcon" src={solanaIcon}></img>0.5</p>
-            </div>
-          </div>
-   </Slider>
-   </div>
-  // <>
-  // {data ? (
-  //   <> 
-  //   <Slider dots={true}>
-  //     {data.map((collection:any) => (
-        
-  //         <div>
-  //           <h3>{collection.name}</h3>
-  //           <p><img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice}</p>
-  //           <img src={collection.image}></img>
-  //         </div>
-    
-  //     ))}
-  //   </Slider>
-  // </>
-  //   ) : (
-  //     <div>
-  //     <h1>Loading...</h1>
-  //    </div>
-  // )}
-  // </>
+  <>
+  <h4 style={{marginTop:"20px", textAlign:"center"}}>My NFTs</h4>
+  {slides ? (
+    <Slider {...settings} className="slider">
+     {slides}
+    </Slider>
+    ) : (
+      <div>
+      <h1>Loading...</h1>
+     </div>
+  )}
+  </>
 );
 };

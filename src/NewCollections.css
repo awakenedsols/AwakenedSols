@@ -4,6 +4,8 @@
 
 .NewCollectionsImgs{
     max-width:150px;
+    border-radius: 5%;
+    margin-bottom: 2%;
 }
 
 .MuiGrid-root, .MuiGrid-item, .MuiGrid-grid-xs-6{

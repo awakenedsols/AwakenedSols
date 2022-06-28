@@ -28,7 +28,7 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
 
     axios(config)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
+      //console.log(JSON.stringify(response.data));
       setData(response.data);    
       return response.data;
       }).then(function(res) {
@@ -63,7 +63,7 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
           console.log(wallet);
         }
         if(data){
-          console.log(data);
+          //console.log(data);
         }
   });
   

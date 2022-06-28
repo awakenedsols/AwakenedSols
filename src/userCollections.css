@@ -12,24 +12,33 @@
 
 .NFTdiv{
     background-color: #060B15;
-    max-height:300px;
+    max-height:400px;
+    max-width:90%;
     border: 1px solid white;
-    border-radius: 5%;
+    border-radius: 15px;
     padding-top:2%;
-    margin:2%;
+    margin:5%;
     text-align:center;
+    margin-top:2%;
 }
 
 .NFTimage{
-    max-width: 200px;
+    width: 150px;
+    border-radius:5%;
     margin:0 auto;
+    margin-bottom:5%;
 }
 
 .symbolIcon{
     width:15px;
-    display:inline;
+    display:inline-block;
+    margin-left:10%;
 }
 
 h3{
     margin-top:1.5%;
+}
+
+.slider{
+    margin-top:0;
 }
