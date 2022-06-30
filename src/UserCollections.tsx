@@ -38,7 +38,7 @@ export const UserCollections = ({ children, ...props }: Props) => {
     height:"30%",
     width: "30%",
     border: "1px solid white",
-    borderRadius: "25%"
+    borderRadius: "20px"
   };
 
   const getSlides = () => {
@@ -91,7 +91,7 @@ useEffect(() => {
       console.log(data);
     }
   
-  }, 1000)
+  }, 3000)
 
   return () => clearInterval(intervalId); //This is important
  

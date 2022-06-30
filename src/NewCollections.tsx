@@ -85,7 +85,7 @@ useEffect(() => {
       console.log(data);
     }
   
-  }, 1000)
+  }, 10000)
 
   return () => clearInterval(intervalId); //This is important
  

@@ -21,7 +21,7 @@ export const Window = ({ children, ...props }: Props) => {
     paddingBottom:"2%",
     border: "1px solid white",
     overflow: "hidden",
-    borderRadius: "3%"
+    borderRadius: "20px"
   };
 
   const windowStyle = {

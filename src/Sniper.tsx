@@ -100,7 +100,7 @@ const Sniper = (props: SniperProps) => {
     display: "inline-block",
     backgroundColor: "#192026",
     border: "1px solid white", 
-    borderRadius: "4%",
+    borderRadius: "15px",
     fontSize: "0.8em"
   };
 
@@ -116,7 +116,7 @@ const Sniper = (props: SniperProps) => {
               <div style={{display:"inline-block", width:"18%", marginLeft:'10%'}}><img src={osIcon} style={{width:"50px", display:"inline-block", paddingBottom:"20px"}}></img><span style={{fontSize: "0.8em"}}>AwakenedSniper</span></div>
               <div style={consoleStyle}>
                 <table style={{width:"100%"}}>
-                  <th style={{width: "80%"}}>AwakenedOS<span style={green}>v1.0</span></th>
+                  <th style={{width: "80%", paddingLeft:"10px"}}>AwakenedOS<span style={green}>v1.0</span></th>
                   <th style={{borderLeft: "1px solid white", borderRight: "1px solid white"}}><img src={globeIcon} style={{display:"inline-block", width:"20px"}}></img></th>
                   <th style={{fontSize: "0.8em", borderRadius: "5%"}}>{anchorWallet ? (<>{anchorWallet?.publicKey.toString().substring(0, 15) + "..."}</>) : (<>Not Connected</>) }</th>
                 </table>
