@@ -37,10 +37,11 @@ const ConnectButton = styled(WalletDialogButton)`
   height: 60px;
   margin-top: 10px;
   margin-bottom: 5px;
-  background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
+  background: linear-gradient(180deg, #008000 0%, #59AD6B 100%);
   color: white;
   font-size: 16px;
   font-weight: bold;
+  text-align:center;
 `;
 
 const MintContainer = styled.div``; // add your owns styles here
@@ -489,7 +490,7 @@ const Home = (props: HomeProps) => {
             padding: 24,
             paddingBottom: 10,
             backgroundColor: '#151A1F',
-            borderRadius: 6,
+            borderRadius: 6
           }}
         >
           {!wallet.connected ? (

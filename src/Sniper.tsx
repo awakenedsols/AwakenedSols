@@ -30,7 +30,7 @@ const ConnectButton = styled(WalletDialogButton)`
   height: 60px;
   margin-top: 10px;
   margin-bottom: 5px;
-  background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
+  background: linear-gradient(180deg, #008000 0%, #59AD6B 100%);
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -124,7 +124,7 @@ const Sniper = (props: SniperProps) => {
               
             {!wallet.connected ? (
             <Container style={{ position: 'relative' }}>
-              <Paper style={{padding: 24, paddingBottom: 10, backgroundColor: '#151A1F', borderRadius: 6,}}>
+              <Paper style={{padding: 24, paddingBottom: 10, backgroundColor: '#151A1F', borderRadius: 6, width:"25%", marginLeft: "47%"}}>
                 <ConnectButton>Connect Wallet</ConnectButton>
               </Paper>
             </Container>

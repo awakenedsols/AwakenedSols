@@ -46,6 +46,7 @@ body{
 
 #sniperContainer{
   width:90vw;
+  min-height:90vh;
   margin-left:10%!important;
   margin-top:2%!important;
   margin-bottom:5%!important;
