@@ -42,7 +42,7 @@ export const NewCollections = ({ children, ...props }: Props) => {
     console.log('get new colls');
     var config = {
       method: 'get',
-      url: 'https://api-devnet.magiceden.dev/v2/collections?offset=0&limit=200'
+      url: 'https://api-devnet.magiceden.dev/v2/collections?offset=0&limit=50'
      };
 
 
@@ -85,7 +85,7 @@ useEffect(() => {
       console.log(data);
     }
   
-  }, 10000)
+  }, 3000)
 
   return () => clearInterval(intervalId); //This is important
  

@@ -65,7 +65,7 @@ export const UserCollections = ({ children, ...props }: Props) => {
   const getCollections = async () => {
     var config = {
       method: 'get',
-      url: 'https://api-devnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=100&listStatus=both'
+      url: 'https://api-devnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=20&listStatus=both'
     };
 
 
@@ -91,7 +91,7 @@ useEffect(() => {
       console.log(data);
     }
   
-  }, 3000)
+  }, 2000)
 
   return () => clearInterval(intervalId); //This is important
  

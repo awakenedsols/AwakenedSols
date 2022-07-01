@@ -23,7 +23,7 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
 
     var config = {
       method: 'get',
-      url: 'https://api-devnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=100'
+      url: 'https://api-devnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=20'
     };
 
     axios(config)
@@ -110,7 +110,7 @@ useEffect(() => {
       console.log(data);
     }
   
-  }, 10000)
+  }, 2000)
 
   return () => clearInterval(intervalId); //This is important
  
