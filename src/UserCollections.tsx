@@ -49,7 +49,7 @@ export const UserCollections = ({ children, ...props }: Props) => {
       data.map((collection:any, index:number) => (
         
         <div  data-index={index} key={index} className="NFTdiv">
-           <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + collection.tokenAddress}>
+           <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + collection.mintAddress}>
           <h6>{collection.name}</h6>
           <img className="NFTimage" src={collection.image}></img>
           <div style={{display: "inline-block"}}>
@@ -93,7 +93,7 @@ useEffect(() => {
       console.log(data);
     }
   
-  }, 2000)
+  }, 3000)
 
   return () => clearInterval(intervalId); //This is important
  

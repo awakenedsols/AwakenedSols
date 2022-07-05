@@ -351,7 +351,7 @@ return () => clearInterval(intervalId); //This is important
                             <tr key={new Date(activity.blockTime).toDateString()} >
                               
                                 <td align="left"> 
-                                    <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + activity.tokenAddress}>
+                                    <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + activity.tokenMint}>
                                         <img className="activityImg" src={activity.image}></img>
                                     </a>
                                 </td>
@@ -369,13 +369,13 @@ return () => clearInterval(intervalId); //This is important
                                 </td>
 
                                 <td align="left"> 
-                                    <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + activity.tokenAddress}>
+                                    <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + activity.tokenMint}>
                                        <p>{activity.price}</p>
                                     </a>
                                 </td>
 
                                 <td align="left"> 
-                                    <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + activity.tokenAddress}>
+                                    <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + activity.tokenMint}>
                                        <p>{moment.unix(activity.blockTime).format("YYYY-MM-DD HH:mm:ss")}</p>
                                     </a>
                                 </td>
