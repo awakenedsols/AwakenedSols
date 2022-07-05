@@ -3,6 +3,13 @@ import {Row, Col, Container} from "react-bootstrap";
 import enlargeIcon from './enlargeIcon.png'
 import './Window.css'
 import { Key, ReactChild, ReactFragment, ReactPortal, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Routes,
+  useParams, 
+} from "react-router-dom";
 
 interface Props {
     children?: ReactNode,
@@ -44,9 +51,9 @@ export const Window = ({ children, ...props }: Props) => {
   return (
     <div onClick={open} style={windowTopStyle} className="window">
         <Row>
-            <Col style={{marginLeft:"1%"}}>x</Col>
+            <Col style={{marginLeft:"1%"}}><Link to={`/Sniper/`} key={props.title} className="link">x</Link></Col>
             <Col xs={8} md={6} style={{textAlign:"center"}}><p>{props.title}</p></Col>
-            <Col><img src={enlargeIcon} style={{width:"20px", marginLeft:"70%"}}></img></Col>
+            <Col></Col>
         </Row>
         <div style={windowStyle} className="windowChildren">
             

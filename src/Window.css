@@ -10,3 +10,13 @@
     position:relative;
     overflow-y:scroll;
 }
+
+.collectionLink{
+    text-decoration: none;
+    color:white;
+}
+
+.collectionLink:hover, .link:hover{
+    text-decoration: none;
+    color:green;
+}

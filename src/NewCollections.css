@@ -11,3 +11,24 @@
 .MuiGrid-root, .MuiGrid-item, .MuiGrid-grid-xs-6{
     margin: 0;
 }
+
+#CollectionContainer{
+    width:100%;
+    margin:0 auto;
+    min-height:88vh;
+}
+
+.activityImg{
+    width:50px;
+    border-radius:15px;
+    margin-left:5px;
+}
+
+.link{
+    text-decoration:none;
+    color:white;
+}
+
+.link:hover{
+    color:green;
+}

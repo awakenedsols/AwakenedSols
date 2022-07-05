@@ -42,3 +42,13 @@ h3{
 .slider{
     margin-top:0;
 }
+
+
+.link{
+    text-decoration:none;
+    color:white;
+}
+
+.link:hover{
+    color:green;
+}

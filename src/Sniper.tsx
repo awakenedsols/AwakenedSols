@@ -39,11 +39,6 @@ const ConnectButton = styled(WalletDialogButton)`
 const MintContainer = styled.div``; // add your owns styles here
 
 export interface SniperProps {
-  candyMachineId?: anchor.web3.PublicKey;
-  connection: anchor.web3.Connection;
-  txTimeout: number;
-  rpcHost: string;
-  network: WalletAdapterNetwork;
 }
 
 const Sniper = (props: SniperProps) => {
@@ -56,7 +51,6 @@ const Sniper = (props: SniperProps) => {
 
   const [isHolder, setIsHolder] = useState(false);
 
-  const rpcUrl = props.rpcHost;
   const wallet = useWallet();
 
   const anchorWallet = useMemo(() => {

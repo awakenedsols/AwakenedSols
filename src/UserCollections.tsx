@@ -49,11 +49,13 @@ export const UserCollections = ({ children, ...props }: Props) => {
       data.map((collection:any, index:number) => (
         
         <div  data-index={index} key={index} className="NFTdiv">
+           <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + collection.tokenAddress}>
           <h6>{collection.name}</h6>
           <img className="NFTimage" src={collection.image}></img>
           <div style={{display: "inline-block"}}>
             <img className="symbolIcon" src={solanaIcon}></img><span>{collection.floorPrice}0.2</span>
           </div>
+          </a>
         </div>
       )));
 
@@ -65,7 +67,7 @@ export const UserCollections = ({ children, ...props }: Props) => {
   const getCollections = async () => {
     var config = {
       method: 'get',
-      url: 'https://api-devnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=20&listStatus=both'
+      url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=20&listStatus=both'
     };
 
 
@@ -91,7 +93,7 @@ useEffect(() => {
       console.log(data);
     }
   
-  }, 5000)
+  }, 2000)
 
   return () => clearInterval(intervalId); //This is important
  

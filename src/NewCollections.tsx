@@ -13,7 +13,12 @@ import './NewCollections.css';
 import Grid from '@material-ui/core/Grid'
 import Paper from "@material-ui/core/Paper";
 import { margin } from "@mui/system";
-
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+} from "react-router-dom";
 interface Props {
     children?: ReactNode
     // any props that come into the component
@@ -42,7 +47,7 @@ export const NewCollections = ({ children, ...props }: Props) => {
     console.log('get new colls');
     var config = {
       method: 'get',
-      url: 'https://api-devnet.magiceden.dev/v2/collections?offset=0&limit=50'
+      url: 'https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit=50'
      };
 
 
@@ -101,7 +106,7 @@ return (
             <Paper style={stylez}>
               <div style={paperstylez}>
                 <img src={collection.image} className="NewCollectionsImgs"></img>
-                <p>{collection.name}</p>
+                <Link to={`/Collection/${collection.symbol}`} key={collection.symbol} className="collectionLink"> <p>{collection.name}</p></Link>
                 <p>FP: <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice} 0.5</p>
               </div>
             </Paper>);
@@ -120,7 +125,7 @@ return (
               <Paper style={stylez}>
                 <div style={paperstylez}>
                   <img src={collection.image} className="NewCollectionsImgs"></img>
-                  <p>{collection.name}</p>
+                  <Link to={`/Collection/${collection.symbol}`} key={collection.symbol} className="collectionLink"> <p>{collection.name}</p></Link>
                   <p>FP: <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice} 0.5</p>
                 </div>
               </Paper>);

@@ -3,6 +3,7 @@ import { useMemo } from "react";
 
 import Home from "./Home";
 import Sniper from "./Sniper";
+import Collection from './Collection';
 import {Route, Routes} from 'react-router-dom'
 
 import * as anchor from "@project-serum/anchor";
@@ -92,6 +93,9 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={HomeComponent()}/>
                   <Route path="/Sniper" element={SniperComponent()}/>
+                  <Route
+                      path="/Collection/:id"
+                      element={CollectionComponent()} />
                 </Routes>
                 </ApolloProvider>
             </WalletDialogProvider>
@@ -117,12 +121,12 @@ const HomeComponent = () => {
 
 const SniperComponent = () => {
   return (
-   <Sniper
-   candyMachineId={candyMachineId}
-   connection={connection}
-   txTimeout={DEFAULT_TIMEOUT}
-   rpcHost={rpcHost}
-   network={network}
-                />
+   <Sniper/>
+  );
+}
+
+const CollectionComponent = () => {
+  return (
+   <Collection/>
   );
 }

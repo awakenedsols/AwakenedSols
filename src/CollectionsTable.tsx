@@ -7,6 +7,13 @@ import { Key, ReactChild, ReactFragment, ReactPortal, useCallback, useEffect, us
 import axios from 'axios';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useQuery, gql } from "@apollo/client";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+} from "react-router-dom";
+import './Window.css';
 
 interface Props {
     children?: ReactNode
@@ -23,7 +30,7 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
 
     var config = {
       method: 'get',
-      url: 'https://api-devnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=20'
+      url: 'https://api-mainnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=20'
     };
 
     axios(config)
@@ -135,11 +142,12 @@ return (
       </thead>
       <tbody>
         {data.map((collection:any) => (
+          
           <tr 
             key={collection.name}
           >
             <td style={{fontFamily: "Press Start 2P"}}>
-              {collection.name} 
+            <Link to={`/Collection/${collection.symbol}`} key={collection.symbol} className="collectionLink">{collection.name}</Link>
             </td>
             <td align="left">{new Date(collection.launchDatetime).toDateString()}</td>
             <td align="left"><img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice}</td>
@@ -147,6 +155,7 @@ return (
             <td align="left">{collection.listedCount}</td>
             <td style={{fontFamily: "Press Start 2P"}} align="left">{collection.symbol}</td>
           </tr>
+        
         ))}
       </tbody>
     </table>
