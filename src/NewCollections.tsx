@@ -32,7 +32,7 @@ export const NewCollections = ({ children, ...props }: Props) => {
 
   const stylez = {
     height:"4%",
-    marginBottom: "3%",
+    marginBottom: "5%",
     overflow:"hidden",
     textOverflow:"ellipsis",
     backgroundColor: "#192026"
@@ -103,7 +103,7 @@ return (
       {data ? (
           data.slice(0, Math.floor(data.length/2)).map((collection:any, i:number) => {
             return (
-            <Paper style={stylez}>
+            <Paper style={stylez} className="paper">
               <div style={paperstylez}>
                 <img src={collection.image} className="NewCollectionsImgs"></img>
                 <Link to={`/Collection/${collection.symbol}`} key={collection.symbol} className="collectionLink"> <p>{collection.name}</p></Link>
@@ -122,7 +122,7 @@ return (
         {data ? (
             data.slice(Math.floor(data.length/2), data.length-1).map((collection:any, i:number) => {
               return (
-              <Paper style={stylez}>
+              <Paper style={stylez} className="paper">
                 <div style={paperstylez}>
                   <img src={collection.image} className="NewCollectionsImgs"></img>
                   <Link to={`/Collection/${collection.symbol}`} key={collection.symbol} className="collectionLink"> <p>{collection.name}</p></Link>

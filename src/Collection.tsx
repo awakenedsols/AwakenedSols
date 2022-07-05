@@ -154,7 +154,7 @@ const Collection = (props: CollectionProps) => {
       getCollection();
     
       if(data){
-        //console.log(data);
+        console.log(data);
       }
     
     }, 2000)
@@ -168,7 +168,7 @@ const Collection = (props: CollectionProps) => {
           console.log('use effect');
           getListings();
           if(listings){
-            console.log(listings);
+            //console.log(listings);
           }
         
         }, 5000)
@@ -183,7 +183,7 @@ const Collection = (props: CollectionProps) => {
       console.log('use effect');
       getActivities();
       if(activity){
-        console.log(activity);
+        //console.log(activity);
       }
     
     }, 5000)
@@ -202,7 +202,8 @@ return () => clearInterval(intervalId); //This is important
 
   const paperstylez = {
     textAlign: 'center' as const,
-    marginTop: "2px"
+    marginTop: "2px",
+    margin: "5% 0"
   };
 
   const tableStyle = {
@@ -211,7 +212,7 @@ return () => clearInterval(intervalId); //This is important
   };
 
   const consoleStyle = {
-    width: "70%",
+    width: "75%",
     height:"10%",
     marginLeft: "10px",
     display: "inline-block",
@@ -264,7 +265,8 @@ return () => clearInterval(intervalId); //This is important
     <main>
       {/* {wallet && <p>Balance: {(balance || 0).toLocaleString()} SOL</p>} */}
           <Container id="CollectionContainer">
-              <div style={{display:"inline-block", width:"18%", marginLeft:'10%'}}><img src={osIcon} style={{width:"50px", display:"inline-block", paddingBottom:"20px"}}></img><span style={{fontSize: "0.8em"}}>AwakenedSniper</span></div>
+            <div style={{ width: "100%", margin: "0 25%"}}>
+              <div style={{display:"inline-block", width:"20%"}}><img src={osIcon} style={{width:"20%", display:"inline-block", paddingBottom:"20px"}}></img><span style={{fontSize: "0.8em"}}>AwakenedSniper</span></div>
               <div style={consoleStyle}>
                 <table style={{width:"100%"}}>
                   <th style={{width: "80%", paddingLeft:"10px"}}>AwakenedOS<span style={green}>v1.0</span></th>
@@ -272,7 +274,7 @@ return () => clearInterval(intervalId); //This is important
                   <th style={{fontSize: "0.8em", borderRadius: "5%"}}>{wallet ? (<>{wallet?.publicKey?.toString().substring(0, 15) + "..."}</>) : (<>Not Connected</>) }</th>
                 </table>
               </div>
-              
+            </div>
             {!wallet.connected ? (
             <Container style={{ position: 'relative' }}>
               <Paper style={{padding: 24, paddingBottom: 10, backgroundColor: '#151A1F', borderRadius: 6, width:"25%", marginLeft: "47%"}}>
@@ -287,32 +289,29 @@ return () => clearInterval(intervalId); //This is important
                 <></>
                 ) : (
                 <div style={{width:"80vw", marginLeft: "13%"}}>
+                    <h3>{data.symbol}</h3>
                     <Window title={"Listings"}>
-                        <Grid container spacing={5}>
-                            <Grid item xs={12} lg={2}>
-                                <p>Symbol: {data.symbol}</p>
+                            <Grid container spacing={4} className="stickyheader">
+                                <Grid item xs={6} lg={3} >
+                                    <p className="headerItem">FP: {data.floorPrice/1000000000}</p>
+                                </Grid>
+                                <Grid item xs={6} lg={3} >
+                                    <p className="headerItem">Avg Price: {data.avgPrice24hr/1000000000}</p>
+                                </Grid>
+                                <Grid item xs={6} lg={3} >
+                                    <p className="headerItem">Listed: {data.listedCount}</p>
+                                </Grid>
+                                <Grid item xs={6} lg={3} >
+                                    <p className="headerItem">Volume: {data.volumeAll/1000000000}</p>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} lg={2}>
-                                <p>FP: {data.floorPrice}</p>
-                            </Grid>
-                            <Grid item xs={12} lg={2}>
-                                <p>Avg Price: {data.avgPrice24hr}</p>
-                            </Grid>
-                            <Grid item xs={12} lg={2}>
-                                <p>Listed: {data.listedCount}</p>
-                            </Grid>
-                            <Grid item xs={12} lg={2}>
-                                <p>Volume: {data.volumeAll}</p>
-                            </Grid>
-                        </Grid>
-
                         {!listings ? (
                             <></>
                         ) : (
-                            <Grid container spacing={4}>
+                            <Grid container spacing={4} style={{marginTop:"2%"}}>
                             {listings.map((listing:any) => (
                                 <Grid item xs={12} lg={3}>
-                                    <Paper style={stylez}>
+                                    <Paper style={stylez} className="paper">
                                         <div style={paperstylez}>
                                             <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + listing.tokenAddress}>
                                                 <p>Price: {listing.price}</p>

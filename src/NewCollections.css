@@ -32,3 +32,13 @@
 .link:hover{
     color:green;
 }
+
+.paper:hover{
+    box-shadow: -1px 1px 1px 1px rgba(235, 235, 235, 0.4);
+    transition: 0.3s;
+}
+
+h3{
+    text-align: center;
+    margin-bottom: 20px;
+}

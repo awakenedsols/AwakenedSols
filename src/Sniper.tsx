@@ -88,7 +88,7 @@ const Sniper = (props: SniperProps) => {
   };
 
   const consoleStyle = {
-    width: "70%",
+    width: "75%",
     height:"10%",
     marginLeft: "10px",
     display: "inline-block",
@@ -107,14 +107,16 @@ const Sniper = (props: SniperProps) => {
     <main>
       {/* {wallet && <p>Balance: {(balance || 0).toLocaleString()} SOL</p>} */}
           <Container id="sniperContainer">
-              <div style={{display:"inline-block", width:"18%", marginLeft:'10%'}}><img src={osIcon} style={{width:"50px", display:"inline-block", paddingBottom:"20px"}}></img><span style={{fontSize: "0.8em"}}>AwakenedSniper</span></div>
+          <div style={{ width: "100%", margin: "0 15%"}}>
+              <div style={{display:"inline-block", width:"20%"}}><img src={osIcon} style={{width:"20%", display:"inline-block", paddingBottom:"20px"}}></img><span style={{fontSize: "0.8em"}}>AwakenedSniper</span></div>
               <div style={consoleStyle}>
                 <table style={{width:"100%"}}>
                   <th style={{width: "80%", paddingLeft:"10px"}}>AwakenedOS<span style={green}>v1.0</span></th>
                   <th style={{borderLeft: "1px solid white", borderRight: "1px solid white"}}><img src={globeIcon} style={{display:"inline-block", width:"20px"}}></img></th>
-                  <th style={{fontSize: "0.8em", borderRadius: "5%"}}>{anchorWallet ? (<>{anchorWallet?.publicKey.toString().substring(0, 15) + "..."}</>) : (<>Not Connected</>) }</th>
+                  <th style={{fontSize: "0.8em", borderRadius: "5%"}}>{wallet ? (<>{wallet?.publicKey?.toString().substring(0, 15) + "..."}</>) : (<>Not Connected</>) }</th>
                 </table>
               </div>
+            </div>
               
             {!wallet.connected ? (
             <Container style={{ position: 'relative' }}>
