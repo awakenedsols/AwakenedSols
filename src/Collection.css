@@ -1,15 +1,8 @@
-.symbolIcon{
-    width:15px;
-}
 
-.NewCollectionsImgs{
-    max-width:150px;
-    border-radius: 5%;
-    margin-bottom: 2%;
-}
-
-.MuiGrid-root, .MuiGrid-item, .MuiGrid-grid-xs-6{
-    margin: 0;
+#CollectionContainer{
+    width:100%;
+    margin:0 auto;
+    min-height:88vh;
 }
 
 .activityImg{
@@ -38,5 +31,9 @@ h3{
 }
 
 .window{
-    height:100vh!important;
+    height:85vh!important;
+}
+
+.windowChildren{
+    height:80vh;
 }

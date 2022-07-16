@@ -129,13 +129,15 @@ const Sniper = (props: SniperProps) => {
               <Row style={{margin: 0, width: "80vw"}}>
                 <Col sm={12} lg={4}>
                   <Window title="New Collections">
-                  <NewCollections wallet={anchorWallet?.publicKey}></NewCollections>
+                    <NewCollections wallet={anchorWallet?.publicKey}></NewCollections>
                   </Window>
                 </Col>
                 <Col sm={12} lg={8}>
                   <Window title="Launchpad Collections">
                     <CollectionsTable wallet={anchorWallet?.publicKey}></CollectionsTable>
                   </Window>
+                </Col>
+                <Col sm={12} lg={12}>
                   <UserCollections wallet={anchorWallet?.publicKey}></UserCollections>
                 </Col>
               </Row>

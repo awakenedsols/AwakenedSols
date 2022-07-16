@@ -28,15 +28,15 @@ export const Window = ({ children, ...props }: Props) => {
     paddingBottom:"2%",
     border: "1px solid white",
     overflow: "hidden",
-    borderRadius: "20px"
+    borderRadius: "20px",
+    height: "80vh"
   };
 
   const windowStyle = {
     backgroundColor: '#060B15',
     padding:"30px",
     paddingBottom:"10px",
-    paddingTop: "0",
-    height:"60vh"
+    paddingTop: "0"
   };
 
   useEffect(() => {

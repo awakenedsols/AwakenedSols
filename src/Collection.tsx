@@ -17,7 +17,7 @@ import globeIcon from './globeIcon.png'
 import axios from 'axios';
 import {Window} from './Window';
 import osIcon from './OSicon.png'
-import './NewCollections.css';
+import './Collection.css';
 import moment from 'moment';
 import {
     BrowserRouter as Router,
@@ -26,7 +26,18 @@ import {
     Routes,
     useParams, 
   } from "react-router-dom";
+  import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
 
+  import {Line} from "react-chartjs-2";
 const ConnectButton = styled(WalletDialogButton)`
   width: 100%;
   height: 60px;
@@ -49,6 +60,7 @@ const Collection = (props: CollectionProps) => {
     const [data, setData] = useState<any>();
     const [listings, setListings] = useState<any>();
     const [activity, setActivities] = useState<any>();
+    const [chartdata, setChartData] = useState<any>();
  
     const [alertState, setAlertState] = useState<AlertState>({
     open: false,
@@ -130,7 +142,7 @@ const Collection = (props: CollectionProps) => {
   const getActivities = async () => {
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit=100'
+      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit=20'
     };
 
 
@@ -138,13 +150,36 @@ const Collection = (props: CollectionProps) => {
     .then(function (response) {
       //console.log('axios call user colecction');
       //console.log(response);
-      console.log("activities");
-      console.log(JSON.stringify(response.data));
+      //console.log("activities");
+      //console.log(JSON.stringify(response.data));
       setActivities(response.data);    
       return response.data;
       }).catch(function (error) {
       console.log(error);
     });
+
+    if(activity){
+        let objArray: { price: any; time: string; }[] = [];
+        activity.forEach((item:any)=> {
+            const obj = {price: item.price, time: moment.unix(item.blockTime).format("YYYY-MM-DD HH:mm:ss")};
+        objArray.push(obj);
+        })
+        
+
+        const chartData = {
+           labels: objArray.map(o => o.time),
+           datasets: [
+             {
+               label: 'Sale',
+               data: objArray.map( o => o.price),
+               borderColor: 'green',
+               backgroundColor: 'white',
+             }
+           ],
+         };
+
+         setChartData(chartData);
+    }
   }
 
 
@@ -154,7 +189,7 @@ const Collection = (props: CollectionProps) => {
       getCollection();
     
       if(data){
-        console.log(data);
+        //console.log(data);
       }
     
     }, 2000)
@@ -168,7 +203,7 @@ const Collection = (props: CollectionProps) => {
           console.log('use effect');
           getListings();
           if(listings){
-            //console.log(listings);
+            console.log(listings);
           }
         
         }, 5000)
@@ -187,12 +222,83 @@ const Collection = (props: CollectionProps) => {
       }
     
     }, 5000)
-  
+
 
 return () => clearInterval(intervalId); //This is important
 
 }, [activity, wallet])
-  
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+const options = {
+    
+    responsive: true,
+    type: "line",
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Analytics',
+      },
+    },
+    scales: {
+        x: {
+          adapters: {
+            type: 'time',
+            distribution: 'linear',
+            time: {
+              parser: 'yyyy-MM-dd hh:mm:ss',
+              unit: 'month'
+            },
+            title: {
+              display: true,
+              text: 'Date'
+            }
+          }
+        }
+      }
+    // scales: {
+    //     x: {
+    //         title: "time",
+    //         type: 'timeseries',
+    //         gridLines: {
+    //             lineWidth: 2
+    //         },
+    //         time: {
+    //             unit: "day",
+    //             unitStepSize: 1000,
+    //             displayFormats: {
+    //                 millisecond: 'MMM DD',
+    //                 second: 'MMM DD',
+    //                 minute: 'MMM DD',
+    //                 hour: 'MMM DD',
+    //                 day: 'MMM DD',
+    //                 week: 'MMM DD',
+    //                 month: 'MMM DD',
+    //                 quarter: 'MMM DD',
+    //                 year: 'MMM DD',
+    //             }
+    //         }
+    //     }
+    // }
+  };
+
+  const chartStyles = {
+    height:"80%",
+    width:"90%",
+    marginLeft: "5%"
+  };
+
   const stylez = {
     marginBottom: "3px",
     overflow:"hidden",
@@ -285,9 +391,7 @@ return () => clearInterval(intervalId); //This is important
                 <></>
              )}
 
-            {wallet && !data ? (
-                <></>
-                ) : (
+            {wallet && data &&
                 <div style={{width:"80vw", marginLeft: "13%"}}>
                     <h3>{data.symbol}</h3>
                     <Window title={"Listings"}>
@@ -325,19 +429,18 @@ return () => clearInterval(intervalId); //This is important
                         )}
                     </Window>
                 </div>
-                 )} 
+                 } 
 
-            {wallet && !activity ? (
-                <></>
-                ) : (
-                <div style={{width:"80vw", marginLeft: "13%", marginTop:"20px", marginBottom:"20px"}}>
+            {wallet && activity && chartdata &&
+                <div style={{width:"80vw", height:"100vh", marginLeft: "13%", marginTop:"20px", marginBottom:"20px"}}>
                     <Window title={"Activity"}>
+                    <Line options={options as any} data={chartdata} style={chartStyles}></Line>
                     <Styles>
                         <div>
                         <table>
                         <thead>
                             <tr>
-                            <th align="left">Image</th>
+                            <th align="left"></th>
                             <th align="left">Buyer</th>
                             <th align="left">Seller</th>
                             <th align="left">Price</th>
@@ -387,7 +490,7 @@ return () => clearInterval(intervalId); //This is important
                     </Styles> 
                     </Window>
                 </div>
-                 )}     
+                 }     
 
           <Snackbar
             open={alertState.open}
