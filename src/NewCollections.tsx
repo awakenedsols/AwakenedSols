@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import {Row, Col, Container} from "react-bootstrap";
+import {Row, Col, Container, Button} from "react-bootstrap";
 import enlargeIcon from './enlargeIcon.png'
 import solanaIcon from './solanaIcon.png'
 import styled from 'styled-components'
@@ -28,10 +28,11 @@ interface Props {
 export const NewCollections = ({ children, ...props }: Props) => {
 
   const [data, setData] = useState<any>();
+  const [limit, setLimit] = useState<number>();
   const wallet = props.wallet;
 
   const stylez = {
-    height:"4%",
+    height:"250px",
     marginBottom: "5%",
     overflow:"hidden",
     textOverflow:"ellipsis",
@@ -45,11 +46,17 @@ export const NewCollections = ({ children, ...props }: Props) => {
 
   const getCollections = async () => {
     console.log('get new colls');
+    if(limit){
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit=50'
+      url: 'https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit='+ limit
      };
-
+    }else{
+      var config = {
+        method: 'get',
+        url: 'https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit='+ 50
+       };
+    }
 
     axios(config)
     .then(function (response) {
@@ -61,25 +68,41 @@ export const NewCollections = ({ children, ...props }: Props) => {
       console.log(error);
     });
   }
+  
+  const loadMoreClicked = () => {
+    if(limit){
+      console.log(limit);
+      console.log('load more')
+      var newLimit = limit + 50;
+      setLimit(newLimit);
+      console.log('new limit: ' + limit);
+      getCollections();
+    }
+    
+  }
 
 
   useEffect(() => {
 
     var windowElem = document.getElementsByClassName("windowChildren") as HTMLCollectionOf<HTMLElement>;
     if(windowElem){
-        console.log(windowElem);
+        //console.log(windowElem);
         windowElem[0].style.height = "100vh";
     }
     
     console.log('use effect');
     if(wallet){
-    console.log('wallettt');
-    console.log(wallet);
+    //console.log('wallettt');
+    //console.log(wallet);
     }
     if(data){
-    console.log(data);
+    //console.log(data);
     }
-  });
+
+    if(!limit){
+      setLimit(50);
+    }
+  }, [data, limit, wallet]);
 
 useEffect(() => {
   const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
@@ -87,17 +110,18 @@ useEffect(() => {
     getCollections();
   
     if(data){
-      console.log(data);
+      //console.log(data);
     }
   
   }, 4000)
 
   return () => clearInterval(intervalId); //This is important
  
-}, [useState])
+}, [data])
 
 
 return (
+  <div style={{marginBottom:"70%"}}>
     <Grid container spacing={2}>
       <Grid item xs={6}>
       {data ? (
@@ -107,7 +131,7 @@ return (
               <div style={paperstylez}>
                 <img src={collection.image} className="NewCollectionsImgs"></img>
                 <Link to={`/Collection/${collection.symbol}`} key={collection.symbol} className="collectionLink"> <p>{collection.name}</p></Link>
-                <p>FP: <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice} 0.5</p>
+                {/* <p>FP: <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice} 0.5</p> */}
               </div>
             </Paper>);
             })
@@ -126,13 +150,14 @@ return (
                 <div style={paperstylez}>
                   <img src={collection.image} className="NewCollectionsImgs"></img>
                   <Link to={`/Collection/${collection.symbol}`} key={collection.symbol} className="collectionLink"> <p>{collection.name}</p></Link>
-                  <p>FP: <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice} 0.5</p>
+                  {/* <p>FP: <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice} 0.5</p> */}
                 </div>
               </Paper>);
               })
           ) : (<></>)}
       </Grid>
    </Grid>
-  
+   {data && limit && limit < 451 ? (<Button onClick={loadMoreClicked} style={{backgroundColor:"#59AD6B", marginLeft:"30%", marginTop:"10px"}}>Load More</Button>) : (<></>)}
+   </div>
 );
 };

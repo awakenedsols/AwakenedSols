@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import {Row, Col, Container} from "react-bootstrap";
+import React, { ReactNode, useRef, Ref } from "react";
+import {Row, Col, Container, Button} from "react-bootstrap";
 import enlargeIcon from './enlargeIcon.png'
 import solanaIcon from './solanaIcon.png'
 import styled from 'styled-components'
@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './userCollections.css';
 import { getSliderUtilityClass } from "@mui/base";
+import { getElementAtEvent } from "react-chartjs-2";
 
 interface Props {
     children?: ReactNode
@@ -23,11 +24,13 @@ export const UserCollections = ({ children, ...props }: Props) => {
   const [data, setData] = useState<any>();
   const wallet = props.wallet;
   const [slides, setSlides] = useState<any>();
+  const [isHolder, setIsHolder] = useState(true);
+  const [listing, setListing] = useState<any>();
 
   const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
+    dots: false,
+    infinite: false,
+    speed: 0,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrow:true,
@@ -45,31 +48,65 @@ export const UserCollections = ({ children, ...props }: Props) => {
     
     if(data){
       let slidess = [];
-      slidess.push(
-      data.map((collection:any, index:number) => (
-        
-        <div  data-index={index} key={index} className="NFTdiv">
-           <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + collection.mintAddress}>
-          <h6>{collection.name}</h6>
-          <img className="NFTimage" src={collection.image}></img>
-          <div style={{display: "inline-block"}}>
-            <img className="symbolIcon" src={solanaIcon}></img><span>{collection.floorPrice}0.2</span>
+      if(isHolder){
+        slidess.push(
+        data.map((collection:any, index:number) => (
+          
+          <div  data-index={index} key={index} className="NFTdiv">
+            <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + collection.mintAddress}>
+            <h6>{collection.name}</h6>
+            <img className="NFTimage" src={collection.image}></img>
+            {/* <div style={{display: "inline-block"}}>
+              <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice}0.2
+            </div> */}
+            </a>
+            {!listing && <Button onClick={listClicked} style={{marginBottom:"20px", backgroundColor:"#59AD6B"}}>List</Button>}
+            {listing && 
+            <>
+              <input id="priceInput" style={{display:"block", width:"10%", margin:"0 auto", marginBottom:"10px"}} placeholder="SOL" type="number"></input> 
+              <Button onClick={sellClicked} style={{marginBottom:"20px", backgroundColor:"#59AD6B"}}>Sell</Button>
+            </>
+            }
           </div>
-          </a>
-        </div>
-      )));
+        )));
+      }else{
+        slidess.push(
+          data.map((collection:any, index:number) => (
+            
+            <div  data-index={index} key={index} className="NFTdiv">
+              <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + collection.mintAddress}>
+              <h6>{collection.name}</h6>
+              <img className="NFTimage" src={collection.image}></img>
+              {/* <div style={{display: "inline-block"}}>
+                <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice}0.2
+              </div> */}
+              </a>
+            </div>
+          )));
+      }
 
       setSlides(slidess);
       console.log(slides);
     }
   }
 
+  const listClicked = () => {
+    setListing(true);
+  }
+
+  const sellClicked = () => {
+    var inputElem = document.getElementById("priceInput") as HTMLInputElement;
+
+    console.log(inputElem.value);//todo - not working - value empty
+
+    var sellUrl = "api-devnet.magiceden.dev/v2/instructions/sell?seller={{sellerPubKey}}&auctionHouseAddress={{auctionHouseAddress}}&tokenMint={{mintAccAddress}}&tokenAccount={{tokenAccount}}&price={{price}}&sellerReferral={{sellerReferalWallet}}";
+  }
+
   const getCollections = async () => {
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=20&listStatus=both'
+      url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=10&listStatus=unlisted'
     };
-
 
     axios(config)
     .then(function (response) {
@@ -90,14 +127,15 @@ useEffect(() => {
     getCollections();
   
     if(data){
-      console.log(data);
+      console.log('user collections');
+      //console.log(data);
     }
   
   }, 3000)
 
   return () => clearInterval(intervalId); //This is important
  
-}, [slides, wallet])
+}, [slides, wallet, data, listing])
 
 
 return (

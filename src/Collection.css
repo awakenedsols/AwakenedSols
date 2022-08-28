@@ -37,3 +37,9 @@ h3{
 .windowChildren{
     height:80vh;
 }
+
+.symbolIcon{
+    width:5px;
+    display:inline-block;
+    margin-left:10%;
+}

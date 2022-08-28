@@ -14,6 +14,7 @@ import {
   Link,
 } from "react-router-dom";
 import './Window.css';
+import { forEach } from "lodash";
 
 interface Props {
     children?: ReactNode
@@ -30,56 +31,27 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
 
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=20'
+      url: 'https://api-mainnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=300'
     };
 
     axios(config)
     .then(function (response) {
       //console.log(JSON.stringify(response.data));
-      setData(response.data);    
+      setData(response.data);
+      console.log(data);
       return response.data;
-      }).then(function(res) {
-        // console.log('get stats');
-        //   for(var x=0;x<res.length; x++){
-        //     var getStats = {
-        //       method: 'get',
-        //       url: 'https://api-devnet.magiceden.dev/v2/collections/' + res[x].symbol + '/stats'
-        //     };
-    
-        //     axios(getStats)
-        //       .then(function (response) {
-        //         console.log(response);
-        //         response.data.map((stats:any) => {
-        //           res[x].floorPrice = stats.floorPrice;
-        //           res[x].volumeAll = stats.volumeAll
-        //           res[x].listedCount = stats.listedCount
-        //         });
-        //       })
-        //       .catch(function (error) {
-        //         console.log(error);
-        //       });
-        //   }
       }).catch(function (error) {
       console.log(error);
     });
   }
 
-  useEffect(() => {
-        console.log('use effect');
-        if(wallet){
-          console.log(wallet);
-        }
-        if(data){
-          //console.log(data);
-        }
-  });
-  
 
   const Styles = styled.div`
   div{
    
   }
   table {
+    
     background-color: #192026;
     color:white;
     border-spacing: 0;
@@ -90,14 +62,20 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
     
     tr {
       td {
+        text-align:right;
         border-bottom: 0;
       }
     }
 
     th{
+      text-align:center;
       background-color: #192026;
       top:0;
       position:sticky;
+    }
+
+    tr:last-child.td:last-child{
+      border-radius: 15px;
     }
 
     th,
@@ -105,15 +83,28 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
       margin: 0;
       padding: 0.2rem;
     }
+    tr:hover{
+      background-color: #59AD6B;
+    }
   }
 `
 
 useEffect(() => {
-  const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
-    console.log('use effect');
+  if(!data){
     getCollections();
   
     if(data){
+      console.log('data');
+      console.log(data);
+    }
+  }
+
+  const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
+    console.log('use effect - get collections');
+    getCollections();
+  
+    if(data){
+      console.log('print data');
       console.log(data);
     }
   
@@ -121,7 +112,15 @@ useEffect(() => {
 
   return () => clearInterval(intervalId); //This is important
  
-}, [useState])
+}, [data])
+
+
+useEffect(() => {
+  console.log('use effect - wallet');
+  if(wallet){
+    //console.log(wallet);
+  }
+}, [useState, wallet]);
 
 
 return (
@@ -135,29 +134,28 @@ return (
           <th align="left">Name</th>
           <th align="left">Launch Date</th>
           <th align="left">FP</th>
-          <th align="left">Volume</th>
-          <th align="left">Listed</th>
+          <th align="left">Size</th>
           <th align="left">Symbol</th>
         </tr>
       </thead>
-      <tbody>
-        {data.map((collection:any) => (
+      {
+      data.filter((a:any) => new Date(a.launchDatetime).toLocaleString() > new Date('2022-07-01').toLocaleString()).sort((a:any, b:any) => a.launchDatetime > b.launchDatetime ? 1 : -1)
+            .map((collection:any, i:any) => (
           
           <tr 
-            key={collection.name}
+            key={i}
           >
             <td style={{fontFamily: "Press Start 2P"}}>
-            <Link to={`/Collection/${collection.symbol}`} key={collection.symbol} className="collectionLink">{collection.name}</Link>
+            <Link to={`/Collection/${collection.symbol}`} className="collectionLink">{collection.name}</Link>
             </td>
-            <td align="left">{new Date(collection.launchDatetime).toDateString()}</td>
-            <td align="left"><img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice}</td>
-            <td align="left">{collection.volumeAll}</td>
-            <td align="left">{collection.listedCount}</td>
-            <td style={{fontFamily: "Press Start 2P"}} align="left">{collection.symbol}</td>
+            <td align="left"><Link to={`/Collection/${collection.symbol}`} className="collectionLink">{new Date(collection.launchDatetime).toLocaleString('en-US').split(',')[0]}</Link></td>
+            <td align="left">{/*<img className="symbolIcon" src={solanaIcon}></img>*/}<Link to={`/Collection/${collection.symbol}`}className="collectionLink">{collection.price}</Link></td>
+            <td align="left"><Link to={`/Collection/${collection.symbol}`} className="collectionLink">{collection.size}</Link></td>
+            <td style={{fontFamily: "Press Start 2P"}} align="left"><Link to={`/Collection/${collection.symbol}`}  className="collectionLink">{collection.symbol}</Link></td>
           </tr>
         
         ))}
-      </tbody>
+     
     </table>
     </div>
   </Styles> 

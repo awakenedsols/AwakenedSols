@@ -1,5 +1,6 @@
 import { Key, ReactChild, ReactFragment, ReactPortal, useCallback, useEffect, useMemo, useState } from 'react';
 import * as anchor from '@project-serum/anchor';
+import {Row, Col, Button} from "react-bootstrap";
 import styled from 'styled-components';
 import { Container, Snackbar } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -10,7 +11,6 @@ import { AlertState, formatNumber, getAtaForMint, toDate } from './utils';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import { useWallet } from '@solana/wallet-adapter-react';
 import './sniper.css';
-import {Row, Col} from 'react-bootstrap';
 import { createTheme } from "@material-ui/core/styles";
 import solanaIcon from './solanaIcon.png'
 import globeIcon from './globeIcon.png'
@@ -58,6 +58,7 @@ const Collection = (props: CollectionProps) => {
 
     let { id } = useParams();
     const [data, setData] = useState<any>();
+    const [limit, setLimit] = useState<number>();
     const [listings, setListings] = useState<any>();
     const [activity, setActivities] = useState<any>();
     const [chartdata, setChartData] = useState<any>();
@@ -69,7 +70,7 @@ const Collection = (props: CollectionProps) => {
   });
 
   const [isHolder, setIsHolder] = useState(false);
-
+  const [timeFilter, setTimeFilter] = useState(1);
   
   const wallet = useWallet();
 
@@ -140,10 +141,17 @@ const Collection = (props: CollectionProps) => {
   }
 
   const getActivities = async () => {
+    if(limit){
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit=20'
+      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+limit
     };
+  }else{
+    var config = {
+      method: 'get',
+      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+100
+    };
+  }
 
 
     axios(config)
@@ -182,8 +190,29 @@ const Collection = (props: CollectionProps) => {
     }
   }
 
+  const buyClicked = (tokenMint:any, sellerPubKey:any, auctionHouseAddress:any, price:any, tokenAta:any) => {
+    var url="api-devnet.magiceden.dev/v2/instructions/buy_now?buyer=" + wallet.publicKey + "&seller=" + sellerPubKey + "&auctionHouseAddress=" + auctionHouseAddress + "&tokenMint=" + tokenMint + "&tokenATA=" + tokenAta + "&price=" + price + "&buyerExpiry=0&sellerExpiry=-1"
+    console.log(url);
+    //todo
+  }
+    
+  const loadMoreClicked = () => {
+    if(limit){
+      console.log(limit);
+      console.log('load more')
+      var newLimit = limit + 100;
+      setLimit(newLimit);
+      console.log('new limit: ' + limit);
+      getActivities();
+    } 
+  }
 
   useEffect(() => {
+
+    if(!limit){
+      setLimit(100);
+    }
+
     const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
       console.log('use effect');
       getCollection();
@@ -196,7 +225,7 @@ const Collection = (props: CollectionProps) => {
 
     return () => clearInterval(intervalId); //This is important
    
-}, [data, wallet])
+}, [data, wallet, limit])
 
     useEffect(() => {
         const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
@@ -258,7 +287,7 @@ const options = {
             distribution: 'linear',
             time: {
               parser: 'yyyy-MM-dd hh:mm:ss',
-              unit: 'month'
+              unit: 'hour',
             },
             title: {
               display: true,
@@ -267,30 +296,6 @@ const options = {
           }
         }
       }
-    // scales: {
-    //     x: {
-    //         title: "time",
-    //         type: 'timeseries',
-    //         gridLines: {
-    //             lineWidth: 2
-    //         },
-    //         time: {
-    //             unit: "day",
-    //             unitStepSize: 1000,
-    //             displayFormats: {
-    //                 millisecond: 'MMM DD',
-    //                 second: 'MMM DD',
-    //                 minute: 'MMM DD',
-    //                 hour: 'MMM DD',
-    //                 day: 'MMM DD',
-    //                 week: 'MMM DD',
-    //                 month: 'MMM DD',
-    //                 quarter: 'MMM DD',
-    //                 year: 'MMM DD',
-    //             }
-    //         }
-    //     }
-    // }
   };
 
   const chartStyles = {
@@ -413,7 +418,7 @@ const options = {
                             <></>
                         ) : (
                             <Grid container spacing={4} style={{marginTop:"2%"}}>
-                            {listings.map((listing:any) => (
+                            {listings.sort((a:any, b:any) => a.price > b.price ? 1 : -1).map((listing:any) => (
                                 <Grid item xs={12} lg={3}>
                                     <Paper style={stylez} className="paper">
                                         <div style={paperstylez}>
@@ -422,6 +427,7 @@ const options = {
                                                 <img src={listing.extra.img} className="NewCollectionsImgs"></img>
                                             </a>
                                         </div>
+                                        <Button onClick={() => buyClicked(listing.tokenMint, listing.sellerPubKey, listing.auctionHouseAddress, listing.price, listing.tokenAta)} style={{marginBottom:"20px", backgroundColor:"#59AD6B", marginLeft:"40%"}}>Buy</Button>
                                     </Paper>
                                 </Grid>
                             ))}
@@ -450,7 +456,7 @@ const options = {
                         <tbody>
                             {activity.map((activity:any) => (
                             
-                            <tr key={new Date(activity.blockTime).toDateString()} >
+                            <tr key={moment.unix(activity.blockTime).format("YYYY-MM-DD HH:mm:ss")} >
                               
                                 <td align="left"> 
                                     <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + activity.tokenMint}>
@@ -486,6 +492,7 @@ const options = {
                             ))}
                         </tbody>
                         </table>
+                        {data && limit && limit < 951 ? (<Button onClick={loadMoreClicked} style={{backgroundColor:"#59AD6B", marginLeft:"45%", marginTop:"10px"}}>Load More</Button>) : (<></>)}
                         </div>
                     </Styles> 
                     </Window>

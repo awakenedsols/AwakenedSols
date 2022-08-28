@@ -23,7 +23,7 @@
 }
 
 .NFTimage{
-    width: 150px;
+    max-width: 200px;
     border-radius:5%;
     margin:0 auto;
     margin-bottom:5%;
