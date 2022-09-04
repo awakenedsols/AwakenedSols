@@ -11,7 +11,8 @@ import { WalletDialogButton } from '@solana/wallet-adapter-material-ui';
 import { AlertState, formatNumber, getAtaForMint, toDate } from './utils';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 
-import {Row, Col} from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import {Row, Col, Button} from 'react-bootstrap';
 import { createTheme } from "@material-ui/core/styles";
 import solanaIcon from './solanaIcon.png'
 import globeIcon from './globeIcon.png'
@@ -42,7 +43,8 @@ export interface SniperProps {
 }
 
 const Sniper = (props: SniperProps) => {
-  
+  let navigate = useNavigate();
+
   const [alertState, setAlertState] = useState<AlertState>({
     open: false,
     message: '',
@@ -81,6 +83,13 @@ const Sniper = (props: SniperProps) => {
         }
   }, [anchorWallet]);
   
+  
+  const searchCollection = () => {
+    var elem = document.getElementById("searchInput") as HTMLInputElement;
+    var value = elem.value;
+    console.log(value);
+    navigate('/Collection/'+value);
+  }
   
   const tableStyle = {
     backgroundColor: '##192026',
@@ -136,6 +145,12 @@ const Sniper = (props: SniperProps) => {
                   <Window title="Launchpad Collections">
                     <CollectionsTable wallet={anchorWallet?.publicKey}></CollectionsTable>
                   </Window>
+                </Col>
+                <Col sm={12} lg={12}>
+                 <div style={{margin:"5% 10%"}}>
+                    <input id="searchInput" style={{width:"80%", marginRight: "15px"}} placeholder="search for a collection by symbol"></input>
+                    <Button style={{backgroundColor:"#519C63", borderColor:"#519C63"}} onClick={searchCollection}>Search</Button>
+                 </div>
                 </Col>
                 <Col sm={12} lg={12}>
                   <UserCollections wallet={anchorWallet?.publicKey}></UserCollections>

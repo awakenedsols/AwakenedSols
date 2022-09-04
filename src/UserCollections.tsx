@@ -30,11 +30,12 @@ export const UserCollections = ({ children, ...props }: Props) => {
   const settings = {
     dots: false,
     infinite: false,
-    speed: 0,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrow:true,
-    initialSlide: 0
+    initialSlide: 0,
+    autoplay: false,
+    pauseOnHover:true
   };
 
   const carouelStyle = {
@@ -60,13 +61,13 @@ export const UserCollections = ({ children, ...props }: Props) => {
               <img className="symbolIcon" src={solanaIcon}></img>{collection.floorPrice}0.2
             </div> */}
             </a>
-            {!listing && <Button onClick={listClicked} style={{marginBottom:"20px", backgroundColor:"#59AD6B"}}>List</Button>}
+            {/* {!listing && <Button onClick={listClicked} style={{marginBottom:"20px", backgroundColor:"#59AD6B", borderColor:"#59AD6B"}}>List</Button>}
             {listing && 
             <>
               <input id="priceInput" style={{display:"block", width:"10%", margin:"0 auto", marginBottom:"10px"}} placeholder="SOL" type="number"></input> 
-              <Button onClick={sellClicked} style={{marginBottom:"20px", backgroundColor:"#59AD6B"}}>Sell</Button>
+              <Button onClick={sellClicked} style={{marginBottom:"20px", backgroundColor:"#59AD6B", borderColor:"#59AD6B"}}>Sell</Button>
             </>
-            }
+            } */}
           </div>
         )));
       }else{

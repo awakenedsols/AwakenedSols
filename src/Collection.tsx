@@ -38,6 +38,13 @@ import {
   } from 'chart.js';
 
   import {Line} from "react-chartjs-2";
+  import {
+    resolveToWalletAddrress,
+    getParsedNftAccountsByOwner,
+  } from "@nfteyez/sol-rayz";
+  
+
+
 const ConnectButton = styled(WalletDialogButton)`
   width: 100%;
   height: 60px;
@@ -58,11 +65,13 @@ const Collection = (props: CollectionProps) => {
 
     let { id } = useParams();
     const [data, setData] = useState<any>();
+    const [pages, setPages] = useState<any>();
+    const [selectedPage, setSelectedPage] = useState<number>();
     const [limit, setLimit] = useState<number>();
     const [listings, setListings] = useState<any>();
     const [activity, setActivities] = useState<any>();
     const [chartdata, setChartData] = useState<any>();
- 
+    const [victoryChartData, setVictoryChartData] = useState<any>();
     const [alertState, setAlertState] = useState<AlertState>({
     open: false,
     message: '',
@@ -122,17 +131,24 @@ const Collection = (props: CollectionProps) => {
   }
 
   const getListings = async () => {
-    var config = {
-      method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=0&limit=20'
-    };
-
-
+    if(selectedPage){
+      var offset = selectedPage * 20;
+      console.log('offset: ' + offset);
+      var config = {
+        method: 'get',
+        url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + offset + '&limit=20'
+      };
+    }else{
+      var config = {
+        method: 'get',
+        url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + 0 + '&limit=20'
+      };
+    }
     axios(config)
     .then(function (response) {
       //console.log('axios call user colecction');
       //console.log(response);
-      console.log(JSON.stringify(response.data));
+      //console.log(JSON.stringify(response.data));
       setListings(response.data);    
       return response.data;
       }).catch(function (error) {
@@ -172,14 +188,21 @@ const Collection = (props: CollectionProps) => {
             const obj = {price: item.price, time: moment.unix(item.blockTime).format("YYYY-MM-DD HH:mm:ss")};
         objArray.push(obj);
         })
+
+        const myData = objArray
+        .sort((a, b) => a.time > b.time ? 1 : -1)
+        .map((item, i) => 
+           item
+        );
+
         
 
         const chartData = {
-           labels: objArray.map(o => o.time),
+           labels: myData.map(o => o.time),
            datasets: [
              {
                label: 'Sale',
-               data: objArray.map( o => o.price),
+               data: myData.map( o => o.price),
                borderColor: 'green',
                backgroundColor: 'white',
              }
@@ -202,10 +225,71 @@ const Collection = (props: CollectionProps) => {
       console.log('load more')
       var newLimit = limit + 100;
       setLimit(newLimit);
-      console.log('new limit: ' + limit);
       getActivities();
     } 
   }
+
+  const pageLinkClicked = (event:any) => {
+    console.log(event.target.value);
+    if(selectedPage){
+      console.log('currentpage: '+selectedPage);
+    } 
+    
+    console.log('change page');
+    setSelectedPage(event.target.value);
+    getListings();
+    event.stopPropagation(); 
+  }
+
+  const isHodler = async() => {
+    if(!isHolder && wallet){
+      var config = {
+        method: 'get',
+        url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet.publicKey + '/tokens?offset=0&limit=100&listStatus=unlisted'
+      };
+  
+      var nfts;
+      var collectionSymbol = "AwakenedSols"//todo
+      var testCollectionSymbol = "demonsters"
+      axios(config)
+      .then(function (response) {
+        //console.log('axios call user colecction');
+        //console.log(response);
+        console.log(response.data);
+        nfts = response.data;
+        nfts.forEach((item:any) => {
+          if(item.collection == testCollectionSymbol){
+            setIsHolder(true);
+            console.log('is holder set to true - user has access to premium features');
+            return;
+          }
+        })
+        return response.data;
+        }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }
+
+
+  useEffect(() => {
+    if(pages){
+      console.log('pages');
+      console.log(pages);
+    }
+    if(selectedPage){
+      console.log('current listings page: ' + selectedPage);
+    }
+    if(limit){
+      console.log('limit: ' + limit);
+    }
+
+    if(isHolder){
+      console.log('is hodler');
+      console.log(isHolder);
+    }
+
+  }, [pages, selectedPage, limit, isHolder])
 
   useEffect(() => {
 
@@ -213,19 +297,46 @@ const Collection = (props: CollectionProps) => {
       setLimit(100);
     }
 
+    if(!selectedPage){
+      setSelectedPage(0);
+      console.log('page set to: ' + selectedPage)
+    }else{
+      console.log('page set to: ' + selectedPage);
+    }
+
+    if(!isHolder){
+      isHodler();
+    }
+
     const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
       console.log('use effect');
       getCollection();
     
       if(data){
-        //console.log(data);
+        var pgs =[];
+  
+        console.log('creating pages');
+        for(var x=0; x<(data.listedCount/20); x++){
+          console.log(data.listedCount/20)
+          if(selectedPage && (x == selectedPage)){
+            pgs.push(<Button id={x.toString()} onClick={event => pageLinkClicked(event)} value={x} style={{color:"white", background: "none", border:"none", display:"inline", marginRight:"20px", cursor: "hover"}}>{x+1}</Button>);
+          }else if(selectedPage && (x!= selectedPage)){
+            pgs.push(<Button id={x.toString()} onClick={event => pageLinkClicked(event)} value={x} style={{color:"#59AD6B",background: "none",  border:"none", display:"inline", marginRight:"20px", cursor: "hover"}}>{x+1}</Button>);
+          }else if(!selectedPage && x==0){
+            pgs.push(<Button id={x.toString()} onClick={event => pageLinkClicked(event)} value={x} style={{color:"white",background: "none", border:"none", display:"inline", marginRight:"20px", cursor: "hover"}}>{x+1}</Button>);
+          }else if(!selectedPage){
+            pgs.push(<Button id={x.toString()} onClick={event => pageLinkClicked(event)} value={x} style={{color:"#59AD6B",background: "none",  border:"none", display:"inline", marginRight:"20px", cursor: "hover"}}>{x+1}</Button>);
+          }
+          
+        }
+        setPages(pgs);
       }
     
     }, 2000)
 
     return () => clearInterval(intervalId); //This is important
    
-}, [data, wallet, limit])
+}, [data, wallet, limit, selectedPage, pages, isHolder])
 
     useEffect(() => {
         const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
@@ -250,12 +361,19 @@ const Collection = (props: CollectionProps) => {
         //console.log(activity);
       }
     
-    }, 5000)
+     }, 5000)
 
+    if(chartdata){
+      console.log(chartdata);
+    }
+
+    if(victoryChartData){
+      console.log(victoryChartData);
+    }
 
 return () => clearInterval(intervalId); //This is important
 
-}, [activity, wallet])
+}, [activity, wallet, chartdata, victoryChartData])
 
 ChartJS.register(
     CategoryScale,
@@ -427,20 +545,29 @@ const options = {
                                                 <img src={listing.extra.img} className="NewCollectionsImgs"></img>
                                             </a>
                                         </div>
-                                        <Button onClick={() => buyClicked(listing.tokenMint, listing.sellerPubKey, listing.auctionHouseAddress, listing.price, listing.tokenAta)} style={{marginBottom:"20px", backgroundColor:"#59AD6B", marginLeft:"40%"}}>Buy</Button>
+                                        {isHolder && <Button onClick={() => buyClicked(listing.tokenMint, listing.sellerPubKey, listing.auctionHouseAddress, listing.price, listing.tokenAta)} style={{marginBottom:"20px", backgroundColor:"#59AD6B", borderColor:"#59AD6B", marginLeft:"40%"}}>Buy</Button>}
                                     </Paper>
                                 </Grid>
                             ))}
                         </Grid>
                         )}
+                         {listings && pages ? 
+                         (
+                          pages
+                         
+                         ) : (<></>)}
                     </Window>
                 </div>
                  } 
 
-            {wallet && activity && chartdata &&
+            {wallet && chartdata &&
                 <div style={{width:"80vw", height:"100vh", marginLeft: "13%", marginTop:"20px", marginBottom:"20px"}}>
                     <Window title={"Activity"}>
                     <Line options={options as any} data={chartdata} style={chartStyles}></Line>
+                    <div style={{marginTop:"20px", marginBottom:"20px"}}>
+                      <h4 style={{marginBottom:"2px", display:"inline"}}>Sales</h4>
+                      {data && limit && limit < 951 ? (<Button onClick={loadMoreClicked} style={{backgroundColor:"#59AD6B", borderColor:"#59AD6B",marginLeft:"80%", display:"inline"}}>Load More</Button>) : (<></>)}
+                    </div>
                     <Styles>
                         <div>
                         <table>
@@ -456,8 +583,7 @@ const options = {
                         <tbody>
                             {activity.map((activity:any) => (
                             
-                            <tr key={moment.unix(activity.blockTime).format("YYYY-MM-DD HH:mm:ss")} >
-                              
+                            <tr>
                                 <td align="left"> 
                                     <a target="_blank" className="link" href={"https://www.magiceden.io/item-details/" + activity.tokenMint}>
                                         <img className="activityImg" src={activity.image}></img>
@@ -492,8 +618,7 @@ const options = {
                             ))}
                         </tbody>
                         </table>
-                        {data && limit && limit < 951 ? (<Button onClick={loadMoreClicked} style={{backgroundColor:"#59AD6B", marginLeft:"45%", marginTop:"10px"}}>Load More</Button>) : (<></>)}
-                        </div>
+                         </div>
                     </Styles> 
                     </Window>
                 </div>

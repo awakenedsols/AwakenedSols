@@ -54,7 +54,7 @@ export const NewCollections = ({ children, ...props }: Props) => {
     }else{
       var config = {
         method: 'get',
-        url: 'https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit='+ 50
+        url: 'https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit=50'
        };
     }
 
@@ -157,7 +157,7 @@ return (
           ) : (<></>)}
       </Grid>
    </Grid>
-   {data && limit && limit < 451 ? (<Button onClick={loadMoreClicked} style={{backgroundColor:"#59AD6B", marginLeft:"30%", marginTop:"10px"}}>Load More</Button>) : (<></>)}
+   {data && limit && limit < 451 ? (<Button onClick={loadMoreClicked} style={{backgroundColor:"#59AD6B", borderColor:"#59AD6B", marginLeft:"30%", marginTop:"10px"}}>Load More</Button>) : (<></>)}
    </div>
 );
 };
