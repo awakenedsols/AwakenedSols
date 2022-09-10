@@ -622,7 +622,7 @@ const Home = (props: HomeProps) => {
             <li>Develop extra features based on feedback for Sniping Tool.</li>
           </ul>
           <ul><h3>Phase 3</h3>
-            <li>Launch Sniping Tool v2</li>
+            <li>Launch Sniping Tool V2</li>
           </ul>
           </div>
           </div>}
