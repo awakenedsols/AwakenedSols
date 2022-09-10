@@ -38,12 +38,6 @@ import {
   } from 'chart.js';
 
   import {Line} from "react-chartjs-2";
-  import {
-    resolveToWalletAddrress,
-    getParsedNftAccountsByOwner,
-  } from "@nfteyez/sol-rayz";
-  
-
 
 const ConnectButton = styled(WalletDialogButton)`
   width: 100%;
