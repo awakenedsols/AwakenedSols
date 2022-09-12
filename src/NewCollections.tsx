@@ -28,7 +28,6 @@ interface Props {
 export const NewCollections = ({ children, ...props }: Props) => {
 
   const [data, setData] = useState<any>();
-  const [loadMore, setLoadMore] = useState<boolean>();
   const wallet = props.wallet;
   const apikey = process.env.REACT_ME_API_KEY;
   
@@ -47,21 +46,11 @@ export const NewCollections = ({ children, ...props }: Props) => {
 
   const getCollections = async () => {
     console.log('get new colls');
-    if(loadMore){
-      console.log('load more')
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/new_collections?more=true',
       params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
      };
-    }else{
-      console.log('get collections')
-      var config = {
-        method: 'get',
-        url: 'https://api-mainnet.magiceden.dev/new_collections',
-        params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
-       };
-    }
 
     axios(config)
     .then(function (response) {
@@ -74,15 +63,15 @@ export const NewCollections = ({ children, ...props }: Props) => {
     });
   }
   
-  const loadMoreClicked = () => {
-    if(loadMore){
-      console.log(loadMore);
-      console.log('load more')
-      setLoadMore(true);
-      getCollections();
-    }
+  // const loadMoreClicked = () => {
+  //   if(loadMore){
+  //     console.log(loadMore);
+  //     console.log('load more')
+  //     setLoadMore(true);
+  //     getCollections();
+  //   }
     
-  }
+  // }
 
 
   useEffect(() => {
@@ -102,10 +91,7 @@ export const NewCollections = ({ children, ...props }: Props) => {
     //console.log(data);
     }
 
-    if(loadMore){
-      console.log(loadMore);
-    }
-  }, [data, loadMore, wallet]);
+  }, [data, wallet]);
 
 useEffect(() => {
   const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
@@ -160,7 +146,7 @@ return (
           ) : (<></>)}
       </Grid>
    </Grid>
-   {data && !loadMore ? (<Button onClick={loadMoreClicked} style={{backgroundColor:"#59AD6B", borderColor:"#59AD6B", marginLeft:"30%", marginTop:"10px"}}>Load More</Button>) : (<></>)}
+  
    </div>
 );
 };
