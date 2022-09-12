@@ -1,0 +1,52 @@
+body{
+    font-family: "Press Start 2P", sans-serif;
+    margin:0;
+}
+
+
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: black;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #59AD6B;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #41814f;
+  }
+
+
+  .MuiContainer-root{
+    padding:0px;
+    margin:0px !important;
+    width:100%;
+   }
+
+
+  .symbolIcon{
+      width:15px;
+  }
+
+ .fa-twitter{
+    color: #59AD6B;
+}
+
+.fa-twitter:hover{
+    color: #41814f;
+    transition: color 0.5s ease;
+}
+
+#sniperContainer{
+  width:90vw;
+  min-height:90vh;
+  margin-left:10%!important;
+  margin-bottom:5%!important;
+}

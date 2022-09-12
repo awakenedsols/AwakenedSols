@@ -1,0 +1,34 @@
+
+.window{
+    position:relative;
+}
+.window Row, .stickyheader{
+    position:sticky;
+    top:0;
+}
+
+.stickyheader{
+    background-color: #060B15;
+}
+
+.windowChildren{
+    position:relative;
+    overflow-y:scroll;
+}
+
+.collectionLink{
+    text-decoration: none;
+    color:white;
+}
+
+.collectionLink:hover, .link:hover{
+    text-decoration: none;
+    color:white;
+}
+
+.headerItem{
+    border: 1px solid white;
+    margin:0 2%;
+    border-radius: 15px;
+    padding: 5% 2%;
+}

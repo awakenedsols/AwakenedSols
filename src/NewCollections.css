@@ -1,0 +1,43 @@
+.symbolIcon{
+    width:15px;
+}
+
+.NewCollectionsImgs{
+    max-width:150px;
+    max-height:150px;
+    border-radius: 5%;
+    margin-bottom: 2%;
+}
+
+.MuiGrid-root, .MuiGrid-item, .MuiGrid-grid-xs-6{
+    margin: 0;
+}
+
+.activityImg{
+    width:50px;
+    border-radius:15px;
+    margin-left:5px;
+}
+
+.link{
+    text-decoration:none;
+    color:white;
+}
+
+.link:hover{
+    color:green;
+}
+
+.paper:hover{
+    box-shadow: -1px 1px 1px 1px rgba(235, 235, 235, 0.4);
+    transition: 0.3s;
+}
+
+h3{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.window{
+    height:100vh!important;
+}

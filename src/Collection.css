@@ -1,0 +1,45 @@
+
+#CollectionContainer{
+    width:100%;
+    margin:0 auto;
+    min-height:88vh;
+}
+
+.activityImg{
+    width:50px;
+    border-radius:15px;
+    margin-left:5px;
+}
+
+.link{
+    text-decoration:none;
+    color:white;
+}
+
+.link:hover{
+    color:green;
+}
+
+.paper:hover{
+    box-shadow: -1px 1px 1px 1px rgba(235, 235, 235, 0.4);
+    transition: 0.3s;
+}
+
+h3{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.window{
+    height:85vh!important;
+}
+
+.windowChildren{
+    height:80vh;
+}
+
+.symbolIcon{
+    width:5px;
+    display:inline-block;
+    margin-left:10%;
+}

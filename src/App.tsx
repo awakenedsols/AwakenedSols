@@ -2,6 +2,8 @@ import "./App.css";
 import { useMemo } from "react";
 
 import Home from "./Home";
+import Sniper from "./Sniper";
+import Collection from './Collection';
 import {Route, Routes} from 'react-router-dom'
 
 import * as anchor from "@project-serum/anchor";
@@ -23,13 +25,13 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import { DEFAULT_TIMEOUT } from './connection';
-const treasury = new anchor.web3.PublicKey(
-  process.env.REACT_APP_TREASURY_ADDRESS!
-);
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 
-const config = new anchor.web3.PublicKey(
-  process.env.REACT_APP_CANDY_MACHINE_CONFIG!
-);
+const client = new ApolloClient({
+  uri: "https://graphql.icy.tools/graphql/",
+  cache: new InMemoryCache()
+});
 
 const candyMachineId = new anchor.web3.PublicKey(
   process.env.REACT_APP_CANDY_MACHINE_ID!
@@ -39,8 +41,6 @@ const network = process.env.REACT_APP_SOLANA_NETWORK as WalletAdapterNetwork;
 
 const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
 const connection = new anchor.web3.Connection(rpcHost);
-
-const startDateSeed = parseInt(process.env.REACT_APP_CANDY_START_DATE!, 10);
 
 const txTimeout = 30000; // milliseconds (confirm this works for your project)
 
@@ -89,9 +89,15 @@ const App = () => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletDialogProvider>
-              <Routes>
-                <Route path="/" element={HomeComponent()}/>
+            <ApolloProvider client={client}>
+                <Routes>
+                  <Route path="/" element={HomeComponent()}/>
+                  {/* <Route path="/Sniper" element={SniperComponent()}/> */}
+                  <Route
+                      path="/Collection/:id"
+                      element={CollectionComponent()} />
                 </Routes>
+                </ApolloProvider>
             </WalletDialogProvider>
           </WalletProvider>
         </ConnectionProvider>
@@ -110,5 +116,17 @@ const HomeComponent = () => {
    rpcHost={rpcHost}
    network={network}
                 />
+  );
+}
+
+const SniperComponent = () => {
+  return (
+   <Sniper/>
+  );
+}
+
+const CollectionComponent = () => {
+  return (
+   <Collection/>
   );
 }
