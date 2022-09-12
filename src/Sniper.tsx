@@ -26,7 +26,6 @@ import {
   SetupState,
 } from './candy-machine';
 import { AlertState, formatNumber, getAtaForMint, toDate } from './utils';
-import { MintCountdown } from './MintCountdown';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
 import { sendTransaction } from './connection';
