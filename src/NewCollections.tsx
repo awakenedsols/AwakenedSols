@@ -30,7 +30,8 @@ export const NewCollections = ({ children, ...props }: Props) => {
   const [data, setData] = useState<any>();
   const [loadMore, setLoadMore] = useState<boolean>();
   const wallet = props.wallet;
-
+  const apikey = process.env.REACT_ME_API_KEY;
+  
   const stylez = {
     height:"250px",
     marginBottom: "5%",
@@ -49,13 +50,15 @@ export const NewCollections = ({ children, ...props }: Props) => {
     if(loadMore){
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/new_collections?more=true'
+      url: 'https://api-mainnet.magiceden.dev/new_collections?more=true',
+      headers: { Authorization: "Bearer " + apikey }
      };
     }else{
       console.log('get collections')
       var config = {
         method: 'get',
-        url: 'https://api-mainnet.magiceden.dev/new_collections'
+        url: 'https://api-mainnet.magiceden.dev/new_collections',
+        headers: { Authorization: "Bearer " + apikey }
        };
     }
 

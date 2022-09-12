@@ -76,6 +76,7 @@ const Collection = (props: CollectionProps) => {
   const [timeFilter, setTimeFilter] = useState(1);
   
   const wallet = useWallet();
+  const apikey = process.env.REACT_ME_API_KEY;
 
   const anchorWallet = useMemo(() => {
     if (
@@ -108,7 +109,8 @@ const Collection = (props: CollectionProps) => {
   const getCollection = async () => {
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/stats'
+      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/stats',
+      headers: { Authorization: "Bearer " + apikey }
     };
 
 

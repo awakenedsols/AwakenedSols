@@ -26,13 +26,15 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
 
   const [data, setData] = useState<any>();
   const wallet = props.wallet;
-
+  const apikey = process.env.REACT_ME_API_KEY;
+  
   const getCollections = async () => {
 
     var config = {
       method: 'get',
       //url: 'https://api-mainnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=300'
-      url: "https://api-mainnet.magiceden.dev/popular_collections?timeRange=1d&edge_cache=true"
+      url: "https://api-mainnet.magiceden.dev/popular_collections?timeRange=1d&edge_cache=true",
+      headers: { Authorization: "Bearer " + apikey }
     };
 
     axios(config)
