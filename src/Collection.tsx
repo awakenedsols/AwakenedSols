@@ -110,7 +110,7 @@ const Collection = (props: CollectionProps) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/stats',
-      headers: { Authorization: "Bearer " + apikey }
+      params:{headers: { Authorization: "Bearer " + apikey }}
     };
 
 
@@ -132,18 +132,20 @@ const Collection = (props: CollectionProps) => {
       console.log('offset: ' + offset);
       var config = {
         method: 'get',
-        url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + offset + '&limit=20'
+        url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + offset + '&limit=20',
+        params:{headers: { Authorization: "Bearer " + apikey }}
       };
     }else{
       var config = {
         method: 'get',
-        url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + 0 + '&limit=20'
+        url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + 0 + '&limit=20',
+        params:{headers: { Authorization: "Bearer " + apikey }}
       };
     }
     axios(config)
     .then(function (response) {
       //console.log('axios call user colecction');
-      //console.log(response);
+      console.log(response);
       //console.log(JSON.stringify(response.data));
       setListings(response.data);    
       return response.data;
@@ -156,12 +158,14 @@ const Collection = (props: CollectionProps) => {
     if(limit){
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+limit
+      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+limit,
+      params:{headers: { Authorization: "Bearer " + apikey }}
     };
   }else{
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+100
+      url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+100,
+      params:{headers: { Authorization: "Bearer " + apikey }}
     };
   }
 
@@ -342,7 +346,7 @@ const Collection = (props: CollectionProps) => {
             console.log(listings);
           }
         
-        }, 5000)
+        }, 3000)
       
   
     return () => clearInterval(intervalId); //This is important
@@ -357,7 +361,7 @@ const Collection = (props: CollectionProps) => {
         //console.log(activity);
       }
     
-     }, 5000)
+     }, 3000)
 
     if(chartdata){
       console.log(chartdata);

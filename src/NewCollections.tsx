@@ -48,17 +48,18 @@ export const NewCollections = ({ children, ...props }: Props) => {
   const getCollections = async () => {
     console.log('get new colls');
     if(loadMore){
+      console.log('load more')
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/new_collections?more=true',
-      headers: { Authorization: "Bearer " + apikey }
+      params:{headers: { Authorization: "Bearer " + apikey }}
      };
     }else{
       console.log('get collections')
       var config = {
         method: 'get',
         url: 'https://api-mainnet.magiceden.dev/new_collections',
-        headers: { Authorization: "Bearer " + apikey }
+        params:{headers: { Authorization: "Bearer " + apikey }}
        };
     }
 
