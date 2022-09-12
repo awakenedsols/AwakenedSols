@@ -615,13 +615,13 @@ const Home = (props: HomeProps) => {
             <li>Sniping Tool Development</li>
             <li>2,222 Awakened Sols Mint(0.5 SOL) - 50 OG(FREE) - 500 WL(0.3 SOL)</li>
             <li>Listing on Secondary Market</li>
-            <li>Launch Sniping Tool to the public with special features for holders</li>
           </ul>
           <ul><h3>Phase 2</h3>
-            <li>Raffles, Collabs, WL spots</li>
-            <li>Develop extra features based on feedback for Sniping Tool.</li>
+            <li>Launch Sniping Tool to the public with special features for holders</li>
+            <li>Develop and launch Raffle Tool, Giveaways, WL spots, Alpha Calls</li>
           </ul>
           <ul><h3>Phase 3</h3>
+            <li>Develop extra features based on feedback for Sniping Tool.</li>
             <li>Launch Sniping Tool V2</li>
           </ul>
           </div>
