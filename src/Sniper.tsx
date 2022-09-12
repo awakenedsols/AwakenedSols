@@ -142,7 +142,7 @@ const Sniper = (props: SniperProps) => {
                   </Window>
                 </Col>
                 <Col sm={12} lg={8}>
-                  <Window title="Launchpad Collections">
+                  <Window title="Popular Collections">
                     <CollectionsTable wallet={anchorWallet?.publicKey}></CollectionsTable>
                   </Window>
                 </Col>

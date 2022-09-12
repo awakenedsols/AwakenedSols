@@ -31,14 +31,14 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
 
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=300'
+      //url: 'https://api-mainnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=300'
+      url: "https://api-mainnet.magiceden.dev/popular_collections?timeRange=1d&edge_cache=true"
     };
 
     axios(config)
     .then(function (response) {
       //console.log(JSON.stringify(response.data));
       setData(response.data);
-      console.log(data);
       return response.data;
       }).catch(function (error) {
       console.log(error);
@@ -92,11 +92,11 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
 useEffect(() => {
   if(!data){
     getCollections();
-  
-    if(data){
-      console.log('data');
-      console.log(data);
-    }
+  }
+
+  if(data){
+    console.log('data');
+    console.log(data);
   }
 
   const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
@@ -108,7 +108,7 @@ useEffect(() => {
       console.log(data);
     }
   
-  }, 6000)
+  }, 3000)
 
   return () => clearInterval(intervalId); //This is important
  
@@ -132,26 +132,26 @@ return (
       <thead>
         <tr>
           <th align="left">Name</th>
-          <th align="left">Launch Date</th>
           <th align="left">FP</th>
-          <th align="left">Size</th>
-          <th align="left">Symbol</th>
+          <th align="left">Avg. Price(30d)</th>
+          <th align="left">Avg. Price(7d)</th>
+          <th>Volume</th>
+          <th></th>
         </tr>
       </thead>
-      {
-      data.filter((a:any) => new Date(a.launchDatetime).toLocaleString() > new Date('2022-07-01').toLocaleString()).sort((a:any, b:any) => a.launchDatetime > b.launchDatetime ? 1 : -1)
-            .map((collection:any, i:any) => (
-          
+      {data && 
+      data.collections.map((collection:any, i:any) => (
           <tr 
             key={i}
           >
             <td style={{fontFamily: "Press Start 2P"}}>
             <Link to={`/Collection/${collection.symbol}`} className="collectionLink">{collection.name}</Link>
             </td>
-            <td align="left"><Link to={`/Collection/${collection.symbol}`} className="collectionLink">{new Date(collection.launchDatetime).toLocaleString('en-US').split(',')[0]}</Link></td>
-            <td align="left">{/*<img className="symbolIcon" src={solanaIcon}></img>*/}<Link to={`/Collection/${collection.symbol}`}className="collectionLink">{collection.price}</Link></td>
-            <td align="left"><Link to={`/Collection/${collection.symbol}`} className="collectionLink">{collection.size}</Link></td>
-            <td style={{fontFamily: "Press Start 2P"}} align="left"><Link to={`/Collection/${collection.symbol}`}  className="collectionLink">{collection.symbol}</Link></td>
+            <td align="left"><Link to={`/Collection/${collection.symbol}`} className="collectionLink">{collection.floorPrice.value1h}</Link></td>
+            <td align="left"><Link to={`/Collection/${collection.symbol}`}className="collectionLink">{Math.round(collection.avgPrice.prev30d * 100) /100}</Link></td>
+            <td align="left"><Link to={`/Collection/${collection.symbol}`}className="collectionLink">{Math.round(collection.avgPrice.prev7d * 100) / 100}</Link></td>
+            <td align="left"><Link to={`/Collection/${collection.symbol}`} className="collectionLink">{Math.floor(collection.txVolume.valueAT)}</Link></td>
+            <td>{<img width={50} src={collection.image}></img>}</td>
           </tr>
         
         ))}

@@ -28,7 +28,7 @@ interface Props {
 export const NewCollections = ({ children, ...props }: Props) => {
 
   const [data, setData] = useState<any>();
-  const [limit, setLimit] = useState<number>();
+  const [loadMore, setLoadMore] = useState<boolean>();
   const wallet = props.wallet;
 
   const stylez = {
@@ -46,22 +46,23 @@ export const NewCollections = ({ children, ...props }: Props) => {
 
   const getCollections = async () => {
     console.log('get new colls');
-    if(limit){
+    if(loadMore){
     var config = {
       method: 'get',
-      url: 'https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit='+ limit
+      url: 'https://api-mainnet.magiceden.dev/new_collections?more=true'
      };
     }else{
+      console.log('get collections')
       var config = {
         method: 'get',
-        url: 'https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit=50'
+        url: 'https://api-mainnet.magiceden.dev/new_collections'
        };
     }
 
     axios(config)
     .then(function (response) {
-      //console.log('axios call');
-      //console.log(JSON.stringify(response.data));
+      console.log('axios call');
+      console.log((response.data));
       setData(response.data);    
       return response.data;
       }).catch(function (error) {
@@ -70,12 +71,10 @@ export const NewCollections = ({ children, ...props }: Props) => {
   }
   
   const loadMoreClicked = () => {
-    if(limit){
-      console.log(limit);
+    if(loadMore){
+      console.log(loadMore);
       console.log('load more')
-      var newLimit = limit + 50;
-      setLimit(newLimit);
-      console.log('new limit: ' + limit);
+      setLoadMore(true);
       getCollections();
     }
     
@@ -99,10 +98,10 @@ export const NewCollections = ({ children, ...props }: Props) => {
     //console.log(data);
     }
 
-    if(!limit){
-      setLimit(50);
+    if(loadMore){
+      console.log(loadMore);
     }
-  }, [data, limit, wallet]);
+  }, [data, loadMore, wallet]);
 
 useEffect(() => {
   const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
@@ -113,7 +112,7 @@ useEffect(() => {
       //console.log(data);
     }
   
-  }, 4000)
+  }, 2000)
 
   return () => clearInterval(intervalId); //This is important
  
@@ -125,7 +124,7 @@ return (
     <Grid container spacing={2}>
       <Grid item xs={6}>
       {data ? (
-          data.slice(0, Math.floor(data.length/2)).map((collection:any, i:number) => {
+          data.collections.slice(0, Math.floor(data.collections.length/2)).map((collection:any, i:number) => {
             return (
             <Paper style={stylez} className="paper">
               <div style={paperstylez}>
@@ -137,14 +136,14 @@ return (
             })
         ) : (
           <div>
-          <h1>Loading...</h1>
+          <h3>Loading...</h3>
           </div>
       )}
       </Grid>
 
       <Grid item xs={6}>
         {data ? (
-            data.slice(Math.floor(data.length/2), data.length-1).map((collection:any, i:number) => {
+            data.collections.slice(Math.floor(data.collections.length/2), data.collections.length-1).map((collection:any, i:number) => {
               return (
               <Paper style={stylez} className="paper">
                 <div style={paperstylez}>
@@ -157,7 +156,7 @@ return (
           ) : (<></>)}
       </Grid>
    </Grid>
-   {data && limit && limit < 451 ? (<Button onClick={loadMoreClicked} style={{backgroundColor:"#59AD6B", borderColor:"#59AD6B", marginLeft:"30%", marginTop:"10px"}}>Load More</Button>) : (<></>)}
+   {data && !loadMore ? (<Button onClick={loadMoreClicked} style={{backgroundColor:"#59AD6B", borderColor:"#59AD6B", marginLeft:"30%", marginTop:"10px"}}>Load More</Button>) : (<></>)}
    </div>
 );
 };
