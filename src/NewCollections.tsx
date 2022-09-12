@@ -52,14 +52,14 @@ export const NewCollections = ({ children, ...props }: Props) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/new_collections?more=true',
-      params:{headers: { Authorization: "Bearer " + apikey }}
+      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
      };
     }else{
       console.log('get collections')
       var config = {
         method: 'get',
         url: 'https://api-mainnet.magiceden.dev/new_collections',
-        params:{headers: { Authorization: "Bearer " + apikey }}
+        params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
        };
     }
 

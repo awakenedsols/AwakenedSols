@@ -108,7 +108,7 @@ export const UserCollections = ({ children, ...props }: Props) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=10&listStatus=unlisted',
-      params:{headers: { Authorization: "Bearer " + apikey }}
+      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
     };
 
     axios(config)

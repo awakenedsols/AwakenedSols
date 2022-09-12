@@ -133,13 +133,13 @@ const Collection = (props: CollectionProps) => {
       var config = {
         method: 'get',
         url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + offset + '&limit=20',
-        params:{headers: { Authorization: "Bearer " + apikey }}
+        params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
       };
     }else{
       var config = {
         method: 'get',
         url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + 0 + '&limit=20',
-        params:{headers: { Authorization: "Bearer " + apikey }}
+        params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
       };
     }
     axios(config)
@@ -159,13 +159,13 @@ const Collection = (props: CollectionProps) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+limit,
-      params:{headers: { Authorization: "Bearer " + apikey }}
+      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
     };
   }else{
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+100,
-      params:{headers: { Authorization: "Bearer " + apikey }}
+      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
     };
   }
 
