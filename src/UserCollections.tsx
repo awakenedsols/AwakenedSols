@@ -26,7 +26,7 @@ export const UserCollections = ({ children, ...props }: Props) => {
   const [slides, setSlides] = useState<any>();
   const [isHolder, setIsHolder] = useState(true);
   const [listing, setListing] = useState<any>();
-  const apikey = process.env.REACT_APP_ME_API_KEY;
+  const apikey = process.env.REACT_ME_API_KEY;
 
   const settings = {
     dots: false,
@@ -108,7 +108,7 @@ export const UserCollections = ({ children, ...props }: Props) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet + '/tokens?offset=0&limit=10&listStatus=unlisted',
-      headers: { Authorization: "Bearer " + apikey }
+      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
     };
 
     axios(config)

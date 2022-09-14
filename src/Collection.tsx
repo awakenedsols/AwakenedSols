@@ -76,7 +76,7 @@ const Collection = (props: CollectionProps) => {
   const [timeFilter, setTimeFilter] = useState(1);
   
   const wallet = useWallet();
-  const apikey = process.env.REACT_APP_ME_API_KEY;
+  const apikey = process.env.REACT_ME_API_KEY;
 
   const anchorWallet = useMemo(() => {
     if (
@@ -110,7 +110,7 @@ const Collection = (props: CollectionProps) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/stats',
-      headers: { Authorization: "Bearer " + apikey }
+      params:{headers: { Authorization: "Bearer " + apikey }}
     };
 
 
@@ -133,16 +133,15 @@ const Collection = (props: CollectionProps) => {
       var config = {
         method: 'get',
         url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + offset + '&limit=20',
-        headers: { Authorization: "Bearer " + apikey }
+        params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
       };
     }else{
       var config = {
         method: 'get',
         url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + 0 + '&limit=20',
-        headers: { Authorization: "Bearer " + apikey }
+        params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
       };
     }
-
     axios(config)
     .then(function (response) {
       //console.log('axios call user colecction');
@@ -160,13 +159,13 @@ const Collection = (props: CollectionProps) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+limit,
-     headers: { Authorization: "Bearer " + apikey }
+      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
     };
   }else{
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+100,
-      headers: { Authorization: "Bearer " + apikey }
+      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
     };
   }
 
@@ -246,8 +245,7 @@ const Collection = (props: CollectionProps) => {
     if(!isHolder && wallet){
       var config = {
         method: 'get',
-        url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet.publicKey + '/tokens?offset=0&limit=100&listStatus=unlisted',
-        headers: { Authorization: "Bearer " + apikey }
+        url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet.publicKey + '/tokens?offset=0&limit=100&listStatus=unlisted'
       };
   
       var nfts;
