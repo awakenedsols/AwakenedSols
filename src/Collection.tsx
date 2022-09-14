@@ -133,15 +133,16 @@ const Collection = (props: CollectionProps) => {
       var config = {
         method: 'get',
         url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + offset + '&limit=20',
-        params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
+        headers: { Authorization: "Bearer " + apikey }
       };
     }else{
       var config = {
         method: 'get',
         url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/listings?offset=' + 0 + '&limit=20',
-        params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
+        headers: { Authorization: "Bearer " + apikey }
       };
     }
+
     axios(config)
     .then(function (response) {
       //console.log('axios call user colecction');
@@ -159,13 +160,13 @@ const Collection = (props: CollectionProps) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+limit,
-      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
+     headers: { Authorization: "Bearer " + apikey }
     };
   }else{
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/activities?offset=0&limit='+100,
-      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
+      headers: { Authorization: "Bearer " + apikey }
     };
   }
 
@@ -245,7 +246,8 @@ const Collection = (props: CollectionProps) => {
     if(!isHolder && wallet){
       var config = {
         method: 'get',
-        url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet.publicKey + '/tokens?offset=0&limit=100&listStatus=unlisted'
+        url: 'https://api-mainnet.magiceden.dev/v2/wallets/'+ wallet.publicKey + '/tokens?offset=0&limit=100&listStatus=unlisted',
+        headers: { Authorization: "Bearer " + apikey }
       };
   
       var nfts;

@@ -34,7 +34,7 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
       method: 'get',
       //url: 'https://api-mainnet.magiceden.dev/v2/launchpad/collections?offset=0&limit=300'
       url: "https://api-mainnet.magiceden.dev/popular_collections?timeRange=1d&edge_cache=true",
-      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
+      headers: { Authorization: "Bearer " + apikey }
     };
 
     axios(config)
