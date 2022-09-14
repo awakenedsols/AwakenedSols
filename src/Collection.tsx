@@ -110,7 +110,7 @@ const Collection = (props: CollectionProps) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/stats',
-      params:{headers: { Authorization: "Bearer " + apikey }}
+      headers: { Authorization: "Bearer " + apikey }
     };
 
 
