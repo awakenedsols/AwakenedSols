@@ -29,7 +29,7 @@ export const NewCollections = ({ children, ...props }: Props) => {
 
   const [data, setData] = useState<any>();
   const wallet = props.wallet;
-  const apikey = process.env.REACT_ME_API_KEY;
+  const apikey = process.env.REACT_APP_ME_API_KEY;
   
   const stylez = {
     height:"250px",
