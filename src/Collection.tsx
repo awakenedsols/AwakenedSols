@@ -76,7 +76,7 @@ const Collection = (props: CollectionProps) => {
   const [timeFilter, setTimeFilter] = useState(1);
   
   const wallet = useWallet();
-  const apikey = process.env.REACT_ME_API_KEY;
+  const apikey = process.env.REACT_APP_ME_API_KEY;
 
   const anchorWallet = useMemo(() => {
     if (
@@ -110,7 +110,7 @@ const Collection = (props: CollectionProps) => {
     var config = {
       method: 'get',
       url: 'https://api-mainnet.magiceden.dev/v2/collections/' + id + '/stats',
-      params:{headers: { Authorization: "Bearer " + apikey }}
+      params:{headers: { Authorization: "Bearer " + apikey }, 'Access-Control-Allow-Origin': '*',}
     };
 
 
