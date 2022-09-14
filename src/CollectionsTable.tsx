@@ -26,7 +26,7 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
 
   const [data, setData] = useState<any>();
   const wallet = props.wallet;
-  const apikey = process.env.REACT_ME_API_KEY;
+  const apikey = process.env.REACT_APP_ME_API_KEY;
   
   const getCollections = async () => {
 
@@ -40,6 +40,7 @@ export const CollectionsTable = ({ children, ...props }: Props) => {
     axios(config)
     .then(function (response) {
       //console.log(JSON.stringify(response.data));
+      console.log('apikey'+apikey);
       setData(response.data);
       return response.data;
       }).catch(function (error) {

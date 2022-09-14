@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 import Home from "./Home";
 import Sniper from "./Sniper";
-import Collection from './Collection';
+import Collection from "./Collection";
 import {Route, Routes} from 'react-router-dom'
 
 import * as anchor from "@project-serum/anchor";

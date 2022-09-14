@@ -76,7 +76,7 @@ const Collection = (props: CollectionProps) => {
   const [timeFilter, setTimeFilter] = useState(1);
   
   const wallet = useWallet();
-  const apikey = process.env.REACT_ME_API_KEY;
+  const apikey = process.env.REACT_APP_ME_API_KEY;
 
   const anchorWallet = useMemo(() => {
     if (
@@ -342,10 +342,7 @@ const Collection = (props: CollectionProps) => {
         const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
           console.log('use effect');
           getListings();
-          if(listings){
-            console.log(listings);
-          }
-        
+         
         }, 3000)
       
   
@@ -367,13 +364,19 @@ const Collection = (props: CollectionProps) => {
       console.log(chartdata);
     }
 
+    if(listings){
+      console.log('listings');
+      console.log(listings);
+    }
+  
+
     if(victoryChartData){
       console.log(victoryChartData);
     }
 
 return () => clearInterval(intervalId); //This is important
 
-}, [activity, wallet, chartdata, victoryChartData])
+}, [activity, wallet, chartdata, victoryChartData, listings])
 
 ChartJS.register(
     CategoryScale,
